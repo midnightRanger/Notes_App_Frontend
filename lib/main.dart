@@ -1,3 +1,5 @@
+import 'package:dart_interface/pages/home_page.dart';
+import 'package:dart_interface/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,7 +32,8 @@ class _BottomNavigationBarState extends State<MyHomePage> {
   int currentIndex = 0; 
 
   final List<Widget> pages = [
-    MyHomePage()
+    ProfilePage(),
+    HomePage(),
   ];
 
   @override
@@ -38,8 +41,12 @@ class _BottomNavigationBarState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home)
-        )
+          icon: Icon(Icons.accessibility_rounded),
+          label: "Profile"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "Home")
       ],
       currentIndex: currentIndex,
       onTap: (value) {

@@ -20,9 +20,15 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  String get userName => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  String? get userName => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get password => throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
+  String? get refreshToken => throw _privateConstructorUsedError;
+  String? get salt => throw _privateConstructorUsedError;
+  String? get hashPassword => throw _privateConstructorUsedError;
+  bool? get isActive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +40,16 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String userName, String email, String password});
+  $Res call(
+      {int? id,
+      String? userName,
+      String? email,
+      String? password,
+      String? accessToken,
+      String? refreshToken,
+      String? salt,
+      String? hashPassword,
+      bool? isActive});
 }
 
 /// @nodoc
@@ -50,23 +65,53 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
+    Object? id = freezed,
+    Object? userName = freezed,
+    Object? email = freezed,
+    Object? password = freezed,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? salt = freezed,
+    Object? hashPassword = freezed,
+    Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      userName: null == userName
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
+              as String?,
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      salt: freezed == salt
+          ? _value.salt
+          : salt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hashPassword: freezed == hashPassword
+          ? _value.hashPassword
+          : hashPassword // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -77,7 +122,16 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$_UserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userName, String email, String password});
+  $Res call(
+      {int? id,
+      String? userName,
+      String? email,
+      String? password,
+      String? accessToken,
+      String? refreshToken,
+      String? salt,
+      String? hashPassword,
+      bool? isActive});
 }
 
 /// @nodoc
@@ -89,23 +143,53 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
+    Object? id = freezed,
+    Object? userName = freezed,
+    Object? email = freezed,
+    Object? password = freezed,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? salt = freezed,
+    Object? hashPassword = freezed,
+    Object? isActive = freezed,
   }) {
     return _then(_$_User(
-      userName: null == userName
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
+              as String?,
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      salt: freezed == salt
+          ? _value.salt
+          : salt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hashPassword: freezed == hashPassword
+          ? _value.hashPassword
+          : hashPassword // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -114,20 +198,40 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.userName, required this.email, required this.password});
+      {required this.id,
+      required this.userName,
+      required this.email,
+      required this.password,
+      required this.accessToken,
+      required this.refreshToken,
+      required this.salt,
+      required this.hashPassword,
+      required this.isActive});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final String userName;
+  final int? id;
   @override
-  final String email;
+  final String? userName;
   @override
-  final String password;
+  final String? email;
+  @override
+  final String? password;
+  @override
+  final String? accessToken;
+  @override
+  final String? refreshToken;
+  @override
+  final String? salt;
+  @override
+  final String? hashPassword;
+  @override
+  final bool? isActive;
 
   @override
   String toString() {
-    return 'User(userName: $userName, email: $email, password: $password)';
+    return 'User(id: $id, userName: $userName, email: $email, password: $password, accessToken: $accessToken, refreshToken: $refreshToken, salt: $salt, hashPassword: $hashPassword, isActive: $isActive)';
   }
 
   @override
@@ -135,16 +239,27 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_User &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.salt, salt) || other.salt == salt) &&
+            (identical(other.hashPassword, hashPassword) ||
+                other.hashPassword == hashPassword) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password);
+  int get hashCode => Object.hash(runtimeType, id, userName, email, password,
+      accessToken, refreshToken, salt, hashPassword, isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -162,18 +277,36 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String userName,
-      required final String email,
-      required final String password}) = _$_User;
+      {required final int? id,
+      required final String? userName,
+      required final String? email,
+      required final String? password,
+      required final String? accessToken,
+      required final String? refreshToken,
+      required final String? salt,
+      required final String? hashPassword,
+      required final bool? isActive}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  String get userName;
+  int? get id;
   @override
-  String get email;
+  String? get userName;
   @override
-  String get password;
+  String? get email;
+  @override
+  String? get password;
+  @override
+  String? get accessToken;
+  @override
+  String? get refreshToken;
+  @override
+  String? get salt;
+  @override
+  String? get hashPassword;
+  @override
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

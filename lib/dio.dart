@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 class Dio_Client {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'localhost:5781/',
       connectTimeout: 3500,
       receiveTimeout: 3500, 
       sendTimeout: 3500
@@ -16,7 +15,7 @@ class Dio_Client {
       _dio.interceptors.add(AuthInterceptor());
   }
 
-  final _baseUrl = "localhost:5781/";
+  final _baseUrl = "http://localhost:5781/";
 
   Future<User?> getProfile({required String id}) async {
     User? user; 
@@ -44,7 +43,24 @@ class Dio_Client {
     }
     
     return user; 
+  }
 
+  Future<User?> authUser({required User user}) async {
+    User? retrievedUser; 
+    try {
+    _dio.options.headers['Authorization'] = 'Bearer token'; 
+
+    Response response = await _dio.post(_baseUrl + 'token', 
+    data: user.toJson(),
+    );
     
-  }  
+    print('[Auth] : ${response.data}');
+
+
+    } catch (e) {
+      print ('[Auth] : $e');
+    }  
+
+    return 
+  } 
 }

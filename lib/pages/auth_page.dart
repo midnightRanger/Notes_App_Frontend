@@ -1,31 +1,29 @@
 import 'package:dart_interface/dio.dart';
-import 'package:dart_interface/user.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-const ProfilePage({super.key});
+class AuthPage extends StatelessWidget {
+const AuthPage({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Profile Page',
+      title: 'Auth Page',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ProfilePageStateful(),
+      home: const AuthPageStateful(),
     );
   }
 }
 
-class ProfilePageStateful extends StatefulWidget {
-  const ProfilePageStateful({super.key});
+class AuthPageStateful extends StatefulWidget {
+  const AuthPageStateful({super.key});
 
   @override
-  State<ProfilePageStateful> createState() => _ProfilePageStateful();
+  State<AuthPageStateful> createState() => _AuthPageStateful();
 }
 
-class _ProfilePageStateful extends State<ProfilePageStateful>  {
+class _AuthPageStateful extends State<AuthPageStateful>  {
   final Dio_Client _client = Dio_Client();
 
   @override
@@ -59,4 +57,3 @@ class _ProfilePageStateful extends State<ProfilePageStateful>  {
     );
   }
 }
-
