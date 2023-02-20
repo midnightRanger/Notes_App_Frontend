@@ -1,4 +1,5 @@
 import 'package:dart_interface/dio.dart';
+import 'package:dart_interface/globals/settings/utils/ModelResponse.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 

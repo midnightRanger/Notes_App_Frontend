@@ -1,3 +1,4 @@
+import 'package:dart_interface/globals/settings/utils/ModelResponse.dart';
 import 'package:dart_interface/interceptor/AuthInterceptor.dart';
 import 'package:dart_interface/user.dart';
 import 'package:dio/dio.dart';
@@ -46,7 +47,8 @@ class Dio_Client {
   }
 
   Future<User?> authUser({required User user}) async {
-    User? retrievedUser; 
+    ModelResponse? retrievedUser; 
+    User? encodedUser; 
 
     try { 
 
@@ -54,8 +56,11 @@ class Dio_Client {
     data: user.toJson(),
     );
 
-    retrievedUser = User.fromJson(response.data);
-     _dio.options.headers['Authorization'] = 'Bearer ${retrievedUser.accessToken}';
+    retrievedUser = ModelResponse.fromJson(response.data);
+
+    encodedUser = User.fromJson(retrievedUser.data);
+
+     _dio.options.headers['Authorization'] = 'Bearer ${encodedUser.accessToken}';
     print('[Auth] : ${response.data}');
 
 
@@ -64,6 +69,6 @@ class Dio_Client {
       return null; 
     }  
 
-    return retrievedUser; 
+    return encodedUser; 
   } 
 }
