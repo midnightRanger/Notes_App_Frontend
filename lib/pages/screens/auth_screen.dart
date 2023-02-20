@@ -22,13 +22,8 @@ class AuthScreen extends StatelessWidget {
               width: double.infinity,
               child: Column(children: [
                 // Display a welcome user image
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    'assets/AuthScreen/WelcomeScreenImage_landscape_2.png',
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                
+          
                 const AuthFormWidget()
               ]),
             ),

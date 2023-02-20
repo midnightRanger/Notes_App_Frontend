@@ -47,6 +47,7 @@ class Dio_Client {
 
   Future<User?> authUser({required User user}) async {
     User? retrievedUser; 
+
     try { 
 
     Response response = await _dio.post(_baseUrl + 'token', 
@@ -54,12 +55,15 @@ class Dio_Client {
     );
 
     retrievedUser = User.fromJson(response.data);
-    _dio.options.headers['Authorization'] = 'Bearer ${retrievedUser.accessToken}';
+     _dio.options.headers['Authorization'] = 'Bearer ${retrievedUser.accessToken}';
     print('[Auth] : ${response.data}');
 
 
     } catch (e) {
       print ('[Auth] : $e');
+      return null; 
     }  
+
+    return retrievedUser; 
   } 
 }

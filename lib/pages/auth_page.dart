@@ -1,6 +1,8 @@
+import 'package:dart_interface/dio.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../user.dart';
 import 'client_validators/auth_validator.dart';
 
 class AuthFormWidget extends StatefulWidget {
@@ -11,6 +13,28 @@ class AuthFormWidget extends StatefulWidget {
 }
 
 class _AuthFormWidgetState extends State<AuthFormWidget> {
+  Dio_Client _dio = Dio_Client();
+  bool successAuth = false; 
+  String? failedAuth = "Sorry, auth failed";
+
+  void authWidget() async {
+    User? user = User(password: passwordController.text, email: null,
+       accessToken: null, isActive: null, hashPassword: null, 
+      id: null, refreshToken: null, salt: null, userName: emailController.text);
+      User? authUser = await _dio.authUser(user: user);
+      print(authUser); 
+
+    setState(() {
+            if (authUser != null) {
+        successAuth = true;
+        print (authUser.userName); 
+      }
+      else {
+        print (authUser); 
+      }
+    });
+  }
+
   // Define Form key
   final _formKey = GlobalKey<FormState>();
 
@@ -81,6 +105,7 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
       textAlign: TextAlign.center,
     ));
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +212,11 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                   width: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (!registerAuthMode) {
+                      authWidget();  
+                    }
+                  },
                   child: Text(registerAuthMode ? 'Register' : 'Sign In'),
                   style: ButtonStyle(
                     elevation: MaterialStateProperty.all(8.0),
@@ -206,12 +235,15 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                     ? "Already Have an account?"
                     : "Don't have an account yet?"),
                 TextButton(
-                  onPressed: () =>
-                      setState(() => registerAuthMode = !registerAuthMode),
+                  onPressed: () {
+                      setState(() => registerAuthMode = !registerAuthMode); 
+                      
+                      },
                   child: Text(registerAuthMode ? "Sign In" : "Regsiter"),
                 )
               ],
-            )
+            ),
+            Text(successAuth ? "loggged": "null")
           ],
         ),
       ),
