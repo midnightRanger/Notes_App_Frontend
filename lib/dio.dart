@@ -1,3 +1,4 @@
+import 'package:dart_interface/interceptor/AuthInterceptor.dart';
 import 'package:dart_interface/user.dart';
 import 'package:dio/dio.dart';
 
@@ -11,19 +12,39 @@ class Dio_Client {
       )
   );
 
+  void dioInterceptorInitialize() {
+      _dio.interceptors.add(AuthInterceptor());
+  }
+
   final _baseUrl = "localhost:5781/";
 
-  Future<User> getProfile({required String id}) async {
+  Future<User?> getProfile({required String id}) async {
+    User? user; 
+    try {
     _dio.options.headers['Authorization'] = 'Bearer token'; 
 
     Response userData = await _dio.get(_baseUrl + 'user');
-  
 
     print('User info: ${userData.data}');
 
-    User user = User.fromJson(userData.data);
+    user = User.fromJson(userData.data);
 
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      
+      } else {
+      // Error due to setting up or sending the request
+      print('Error sending request!');
+      print(e.message);
+    }
+    }
+    
     return user; 
 
+    
   }  
 }
