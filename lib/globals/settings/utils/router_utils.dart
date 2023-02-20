@@ -23,7 +23,7 @@ extension AppPageExtension on APP_PAGE {
         return "/profile";
 
       case APP_PAGE.onboard:
-        return "/";
+        return "/onboard";
 
       default:
         return "/";
@@ -46,7 +46,7 @@ extension AppPageExtension on APP_PAGE {
         return "profile";
 
       case APP_PAGE.onboard:
-        return "auth";
+        return "profile";
 
       default:
         return "auth";

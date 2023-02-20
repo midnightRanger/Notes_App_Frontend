@@ -25,7 +25,7 @@ class AppRouter {
       initialLocation: "/",
       routes: [
          GoRoute(
-            path: "/",
+            path: APP_PAGE.auth.routePath,
             name: APP_PAGE.auth.routeName,
             builder: (context, state) => const AuthScreen()
           ),
@@ -49,6 +49,10 @@ class AppRouter {
 
         // Checking if current path is onboarding or not
         bool isOnboarding = state.subloc == onboardPath;
+
+        if (state.subloc == "/") {
+          return null; 
+        }
 
         // check if sharedPref as onBoardCount key or not
         //if is does then we won't onboard else we will
