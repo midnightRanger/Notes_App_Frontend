@@ -1,3 +1,4 @@
+import 'package:dart_interface/dio.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,3 +16,25 @@ const ProfilePage({super.key});
     );
   }
 }
+
+class ProfilePageStateful extends StatefulWidget {
+  const ProfilePageStateful({super.key});
+
+  @override
+  State<ProfilePageStateful> createState() => _ProfilePageStateful();
+}
+
+class _ProfilePageStateful extends State<ProfilePageStateful>  {
+  final userProfile = Dio_Client().getProfile(id: "1");  
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: const Center(
+        child: Text('),
+      ),
+      
+    );
+  }
+}
+
