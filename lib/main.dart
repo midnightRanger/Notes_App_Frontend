@@ -1,62 +1,55 @@
 import 'package:dart_interface/pages/home_page.dart';
 import 'package:dart_interface/pages/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'globals/provider/app_state_provider.dart';
+import 'globals/settings/app_router.dart';
+
+Future<void> main() async {
+  //  concrete binding for applications based on the Widgets framewor
+  WidgetsFlutterBinding.ensureInitialized();
+
+// Instantiate shared pref
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.black38),
+  );
+// Pass prefs as value in MyApp
+  runApp(MyApp(prefs: prefs));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+// Declared fields prefs which we will pass to the router class
+  SharedPreferences prefs;
+  MyApp({required this.prefs, Key? key}) : super(key: key);
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _BottomNavigationBarState();
-}
-
-class _BottomNavigationBarState extends State<MyHomePage> {
-  int currentIndex = 0; 
-
-  final List<Widget> pages = [
-    ProfilePage(),
-    HomePage(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.accessibility_rounded),
-          label: "Profile"
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Home")
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppStateProvider()),
+        // Remove previous Provider call and create new proxyprovider that depends on AppStateProvider
+        ProxyProvider<AppStateProvider, AppRouter>(
+            update: (context, appStateProvider, _) => AppRouter(
+                appStateProvider: appStateProvider, prefs: widget.prefs))
       ],
-      currentIndex: currentIndex,
-      onTap: (value) {
-        setState(() {
-          currentIndex = value;
-        });
-      },
+      child: Builder(
+        builder: ((context) {
+          final GoRouter router = Provider.of<AppRouter>(context).router;
+
+          return MaterialApp.router(
+              routeInformationParser: router.routeInformationParser,
+              routerDelegate: router.routerDelegate);
+        }),
       ),
-      body: pages[currentIndex],
     );
   }
 }
-
