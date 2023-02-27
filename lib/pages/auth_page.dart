@@ -1,9 +1,10 @@
 import 'package:dart_interface/dio.dart';
-import 'package:dart_interface/modelresponse.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../user.dart';
+import '../domain/models/ModelErrorResponse.dart';
+import '../domain/models/ModelResponse.dart';
+import '../domain/models/user.dart';
 import 'client_validators/auth_validator.dart';
 
 class AuthFormWidget extends StatefulWidget {
@@ -34,14 +35,13 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
 
     setState(() {
       if (modelResponse != null) {
-        //User? userFromJson = User.fromJson(modelResponse.data);
-  
-        // print(userFromJson.userName);
+        User? userFromJson = User.fromJson(modelResponse!.data);
+        print(userFromJson.userName);
+        authMessage = "Welcome, ${userFromJson.userName}";
       } else {
-        // print(modelResponse.message);
+        authMessage = "Something went wrong...";
       }
-
-      // authMessage = modelResponse.message;
+    
     });
   }
 

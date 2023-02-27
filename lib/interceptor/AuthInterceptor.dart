@@ -1,19 +1,22 @@
 import 'package:dio/dio.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
-  @override 
-  void onError(DioError error, ErrorInterceptorHandler handler) {
-    super.onError(error, handler);
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    print("onRequest");
+    return super.onRequest(options, handler);
   }
 
-  @override 
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler){
-    super.onRequest(options, handler);
+  @override
+  Future? onResponse(Response response, ResponseInterceptorHandler handler) {
+    print("onResponse");
+    return null;
   }
 
-  @override 
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    super.onResponse(response, handler);
+  @override
+  Future onError(DioError err, ErrorInterceptorHandler handler) async {
+    print("onError: ${err.response!.statusCode}");
+    return handler.next(err);  // <--- THE TIP IS HERE
   }
 
 }

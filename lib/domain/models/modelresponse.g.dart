@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'modelresponse.dart';
+part of 'ModelResponse.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -11,7 +11,6 @@ _$_ModelResponse _$$_ModelResponseFromJson(Map<String, dynamic> json) =>
       error: json['error'] as String?,
       data: json['data'],
       message: json['message'] as String?,
-      statusCode: $enumDecode(_$StatusCodeEnumMap, json['statusCode']),
     );
 
 Map<String, dynamic> _$$_ModelResponseToJson(_$_ModelResponse instance) =>
@@ -19,11 +18,4 @@ Map<String, dynamic> _$$_ModelResponseToJson(_$_ModelResponse instance) =>
       'error': instance.error,
       'data': instance.data,
       'message': instance.message,
-      'statusCode': _$StatusCodeEnumMap[instance.statusCode]!,
     };
-
-const _$StatusCodeEnumMap = {
-  StatusCode.OK: 'OK',
-  StatusCode.RUNTIME_ERROR: 'RUNTIME_ERROR',
-  StatusCode.INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
-};

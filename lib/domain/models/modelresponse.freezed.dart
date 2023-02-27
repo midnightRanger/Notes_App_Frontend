@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'modelresponse.dart';
+part of 'ModelResponse.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -23,7 +23,6 @@ mixin _$ModelResponse {
   String? get error => throw _privateConstructorUsedError;
   dynamic get data => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  StatusCode get statusCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,8 +36,7 @@ abstract class $ModelResponseCopyWith<$Res> {
           ModelResponse value, $Res Function(ModelResponse) then) =
       _$ModelResponseCopyWithImpl<$Res, ModelResponse>;
   @useResult
-  $Res call(
-      {String? error, dynamic data, String? message, StatusCode statusCode});
+  $Res call({String? error, dynamic data, String? message});
 }
 
 /// @nodoc
@@ -57,7 +55,6 @@ class _$ModelResponseCopyWithImpl<$Res, $Val extends ModelResponse>
     Object? error = freezed,
     Object? data = freezed,
     Object? message = freezed,
-    Object? statusCode = null,
   }) {
     return _then(_value.copyWith(
       error: freezed == error
@@ -72,10 +69,6 @@ class _$ModelResponseCopyWithImpl<$Res, $Val extends ModelResponse>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as StatusCode,
     ) as $Val);
   }
 }
@@ -88,8 +81,7 @@ abstract class _$$_ModelResponseCopyWith<$Res>
       __$$_ModelResponseCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? error, dynamic data, String? message, StatusCode statusCode});
+  $Res call({String? error, dynamic data, String? message});
 }
 
 /// @nodoc
@@ -106,7 +98,6 @@ class __$$_ModelResponseCopyWithImpl<$Res>
     Object? error = freezed,
     Object? data = freezed,
     Object? message = freezed,
-    Object? statusCode = null,
   }) {
     return _then(_$_ModelResponse(
       error: freezed == error
@@ -121,10 +112,6 @@ class __$$_ModelResponseCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as StatusCode,
     ));
   }
 }
@@ -133,10 +120,7 @@ class __$$_ModelResponseCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ModelResponse implements _ModelResponse {
   const _$_ModelResponse(
-      {required this.error,
-      required this.data,
-      required this.message,
-      required this.statusCode});
+      {required this.error, required this.data, required this.message});
 
   factory _$_ModelResponse.fromJson(Map<String, dynamic> json) =>
       _$$_ModelResponseFromJson(json);
@@ -147,12 +131,10 @@ class _$_ModelResponse implements _ModelResponse {
   final dynamic data;
   @override
   final String? message;
-  @override
-  final StatusCode statusCode;
 
   @override
   String toString() {
-    return 'ModelResponse(error: $error, data: $data, message: $message, statusCode: $statusCode)';
+    return 'ModelResponse(error: $error, data: $data, message: $message)';
   }
 
   @override
@@ -162,15 +144,13 @@ class _$_ModelResponse implements _ModelResponse {
             other is _$_ModelResponse &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality().equals(other.data, data) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.statusCode, statusCode) ||
-                other.statusCode == statusCode));
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, error,
-      const DeepCollectionEquality().hash(data), message, statusCode);
+  int get hashCode => Object.hash(
+      runtimeType, error, const DeepCollectionEquality().hash(data), message);
 
   @JsonKey(ignore: true)
   @override
@@ -190,8 +170,7 @@ abstract class _ModelResponse implements ModelResponse {
   const factory _ModelResponse(
       {required final String? error,
       required final dynamic data,
-      required final String? message,
-      required final StatusCode statusCode}) = _$_ModelResponse;
+      required final String? message}) = _$_ModelResponse;
 
   factory _ModelResponse.fromJson(Map<String, dynamic> json) =
       _$_ModelResponse.fromJson;
@@ -202,8 +181,6 @@ abstract class _ModelResponse implements ModelResponse {
   dynamic get data;
   @override
   String? get message;
-  @override
-  StatusCode get statusCode;
   @override
   @JsonKey(ignore: true)
   _$$_ModelResponseCopyWith<_$_ModelResponse> get copyWith =>
