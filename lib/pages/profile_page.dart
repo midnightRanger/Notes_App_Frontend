@@ -1,8 +1,9 @@
 import 'package:dart_interface/dio.dart';
-import 'package:dart_interface/user.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../domain/models/user.dart';
 
 class ProfilePage extends StatelessWidget {
 const ProfilePage({super.key});

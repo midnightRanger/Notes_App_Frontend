@@ -1,7 +1,8 @@
-import 'package:dart_interface/globals/settings/utils/ModelResponse.dart';
 import 'package:dart_interface/interceptor/AuthInterceptor.dart';
-import 'package:dart_interface/user.dart';
 import 'package:dio/dio.dart';
+
+import 'domain/models/ModelResponse.dart';
+import 'domain/models/user.dart';
 
 class Dio_Client {
   final Dio _dio = Dio(
@@ -56,7 +57,7 @@ class Dio_Client {
     data: user.toJson(),
     );
 
-    retrievedUser = ModelResponse.fromJson(response.data);
+    retrievedUser = ModelResponse.fromJson(response.data); 
 
     encodedUser = User.fromJson(retrievedUser.data); 
 

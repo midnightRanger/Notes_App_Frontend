@@ -1,5 +1,5 @@
 import 'package:dart_interface/dio.dart';
-import 'package:dart_interface/globals/settings/utils/ModelResponse.dart';
+import 'package:dart_interface/modelresponse.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class AuthFormWidget extends StatefulWidget {
 
 class _AuthFormWidgetState extends State<AuthFormWidget> {
   Dio_Client _dio = Dio_Client();
-  bool successAuth = false;
+  bool? successAuth;
   String? authMessage;
 
   void authWidget() async {
@@ -30,17 +30,18 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
         salt: null,
         userName: emailController.text);
     ModelResponse? modelResponse = await _dio.authUser(user: user);
-    print(modelResponse!.data);
+    print(modelResponse);
 
     setState(() {
-      if (modelResponse.data != null) {
-        User? userFromJson = User.fromJson(modelResponse.data);
-        print(userFromJson.userName);
+      if (modelResponse != null) {
+        //User? userFromJson = User.fromJson(modelResponse.data);
+  
+        // print(userFromJson.userName);
       } else {
-        print(modelResponse.message);
+        // print(modelResponse.message);
       }
 
-      authMessage = modelResponse.message;
+      // authMessage = modelResponse.message;
     });
   }
 
