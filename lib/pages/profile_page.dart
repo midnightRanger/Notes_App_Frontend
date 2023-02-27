@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import '../domain/models/user.dart';
 
 class ProfilePage extends StatelessWidget {
-const ProfilePage({super.key});
+ String token;
+ ProfilePage({super.key, required this.token});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,27 +15,32 @@ const ProfilePage({super.key});
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ProfilePageStateful(),
+      home:  ProfilePageStateful(token: token),
     );
   }
 }
 
 class ProfilePageStateful extends StatefulWidget {
-  const ProfilePageStateful({super.key});
+  final String? token; 
+  ProfilePageStateful({super.key, this.token});
 
   @override
-  State<ProfilePageStateful> createState() => _ProfilePageStateful();
+  State<ProfilePageStateful> createState() => _ProfilePageStateful(token: token!);
 }
 
 class _ProfilePageStateful extends State<ProfilePageStateful>  {
+  String token; 
+  _ProfilePageStateful({required this.token});
+  
   final Dio_Client _client = Dio_Client();
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body:  Center(
         child: FutureBuilder<User?>(
-          future: _client.getProfile(id: '1'),
+          future: _client.getProfile(id: '1', token: widget.token!),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               User? userInfo = snapshot.data;

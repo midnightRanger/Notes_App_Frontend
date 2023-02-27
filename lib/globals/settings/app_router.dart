@@ -40,7 +40,9 @@ class AppRouter {
         GoRoute(
             path: APP_PAGE.profile.routePath,
             name: APP_PAGE.profile.routeName,
-            builder: (context, state) => const ProfilePage()),
+            builder: (context, state) =>  ProfilePage(
+              token: state.queryParams['token']!
+            )),
       ],
       redirect: (state) {
         // define the named path of onboard screen

@@ -14,16 +14,18 @@ class Dio_Client {
 
   final _baseUrl = "http://localhost:5781/";
 
-  Future<User?> getProfile({required String id}) async {
-    User? user;
+  Future<User?> getProfile({required String id, required String token}) async {
+    User? encodedUser;
     try {
-      _dio.options.headers['Authorization'] = 'Bearer token';
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
 
-      Response userData = await _dio.get(_baseUrl + 'user');
+      Response rawResponse = await _dio.get(_baseUrl + 'user');
 
-      print('User info: ${userData.data}');
+      print('User info: ${rawResponse.data}');
 
-      user = User.fromJson(userData.data);
+      ModelResponse? modelResponse = ModelResponse.fromJson(rawResponse.data); 
+      encodedUser = User.fromJson(modelResponse.data); 
+
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
@@ -37,7 +39,7 @@ class Dio_Client {
       }
     }
 
-    return user;
+    return encodedUser;
   }
 
   Future<ModelResponse?> authUser({required User user}) async {

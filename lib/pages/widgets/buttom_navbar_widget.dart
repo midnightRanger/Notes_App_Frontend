@@ -9,8 +9,9 @@ import '../../globals/settings/utils/router_utils.dart';
 class CustomBottomNavBar extends StatefulWidget {
   // create index to select from the list of route paths
   final int navItemIndex;
+  final String token; 
 
-  const CustomBottomNavBar({required this.navItemIndex, Key? key})
+  const CustomBottomNavBar({required this.navItemIndex, required this.token, Key? key})
       : super(key: key);
 
   @override
@@ -19,9 +20,9 @@ class CustomBottomNavBar extends StatefulWidget {
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   final List<Widget> pages = [
-    HomePage(), 
-    ProfilePage(),
-    AuthScreen()
+    AuthScreen(), 
+    HomePage(),
+    ProfilePage(token: "")
   ]; 
 
   // Make a list of routes that you'll want to go to
@@ -33,7 +34,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
 // Function that handles navigation based of index received
   void _onItemTapped(int index) {
-    GoRouter.of(context).goNamed(_widgetOptions[index]);
+    GoRouter.of(context).goNamed(_widgetOptions[index], queryParams: {'token': widget.token});
   }
 
   @override
@@ -44,16 +45,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       // List of icons that represent screen.
       items: const [
         BottomNavigationBarItem(
+          icon: Icon(Icons.logout),
+          label: 'Log out',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
+          icon: Icon(Icons.man),
           label: 'Profile',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shop),
-          label: 'Shop',
         ),
       ],
       

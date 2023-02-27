@@ -37,14 +37,14 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
 
     setState(() {
       if (modelResponse != null) {
-        User? userFromJson = User.fromJson(modelResponse!.data);
+        User userFromJson = User.fromJson(modelResponse!.data);
         print(userFromJson.userName);
         authMessage = "Welcome, ${userFromJson.userName}";
 
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-            return const CustomBottomNavBar(navItemIndex: 1);
+            return  CustomBottomNavBar(navItemIndex: 1, token: userFromJson.accessToken!);
           },
         ),
 
