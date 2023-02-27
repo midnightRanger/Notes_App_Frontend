@@ -5,7 +5,7 @@ class ModelResponse {
   ModelResponse({this.error, this.data, this.message}); 
 
   final dynamic error; 
-  final dynamic data; 
+  late final dynamic data; 
   final dynamic message; 
 
   Map<String, dynamic> toJson () => 

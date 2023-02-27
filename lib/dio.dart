@@ -46,7 +46,7 @@ class Dio_Client {
     return user; 
   }
 
-  Future<User?> authUser({required User user}) async {
+  Future<ModelResponse?> authUser({required User user}) async {
     ModelResponse? retrievedUser; 
     User? encodedUser; 
 
@@ -58,7 +58,7 @@ class Dio_Client {
 
     retrievedUser = ModelResponse.fromJson(response.data);
 
-    encodedUser = User.fromJson(retrievedUser.data);
+    encodedUser = User.fromJson(retrievedUser.data); 
 
      _dio.options.headers['Authorization'] = 'Bearer ${encodedUser.accessToken}';
     print('[Auth] : ${response.data}');
@@ -69,6 +69,6 @@ class Dio_Client {
       return null; 
     }  
 
-    return encodedUser; 
+    return retrievedUser; 
   } 
 }

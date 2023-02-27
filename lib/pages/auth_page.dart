@@ -22,16 +22,16 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
     User? user = User(password: passwordController.text, email: null,
        accessToken: null, isActive: null, hashPassword: null, 
       id: null, refreshToken: null, salt: null, userName: emailController.text);
-      User? authUser = await _dio.authUser(user: user);
-      print(authUser); 
+      ModelResponse? modelResponse = await _dio.authUser(user: user);
+      print(modelResponse!.data); 
 
     setState(() {
-            if (authUser != null) {
+            if (modelResponse.data != null) {
         successAuth = true;
-        print (authUser.userName); 
+        print(modelResponse.data.userName); 
       }
       else {
-        print (authUser); 
+        print (modelResponse.message); 
       }
     });
   }
@@ -244,7 +244,7 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                 )
               ],
             ),
-            Text(successAuth ? "loggged": "null")
+            Text(successAuth ? "Successfully logged in": "")
           ],
         ),
       ),
