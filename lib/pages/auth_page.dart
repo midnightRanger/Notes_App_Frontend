@@ -1,4 +1,6 @@
 import 'package:dart_interface/dio.dart';
+import 'package:dart_interface/pages/home_page.dart';
+import 'package:dart_interface/pages/widgets/buttom_navbar_widget.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +40,15 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
         User? userFromJson = User.fromJson(modelResponse!.data);
         print(userFromJson.userName);
         authMessage = "Welcome, ${userFromJson.userName}";
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+            return const CustomBottomNavBar(navItemIndex: 1);
+          },
+        ),
+
+        );
       } else {
         authMessage = "Something went wrong...";
       }

@@ -1,3 +1,6 @@
+import 'package:dart_interface/pages/home_page.dart';
+import 'package:dart_interface/pages/profile_page.dart';
+import 'package:dart_interface/pages/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +18,12 @@ class CustomBottomNavBar extends StatefulWidget {
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
+  final List<Widget> pages = [
+    HomePage(), 
+    ProfilePage(),
+    AuthScreen()
+  ]; 
+
   // Make a list of routes that you'll want to go to
   static final List<String> _widgetOptions = [
     APP_PAGE.auth.routeName,
@@ -29,7 +38,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+      
       // List of icons that represent screen.
       items: const [
         BottomNavigationBarItem(
@@ -45,34 +56,17 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           label: 'Shop',
         ),
       ],
-
-      // Backgroud color
-
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      
 
       currentIndex: widget.navItemIndex, // current selected index
-      selectedItemColor:
-          Theme.of(context).colorScheme.onPrimary, // selected item color
-
-      selectedIconTheme: IconThemeData(
-        size: 30, // Make selected icon bigger than the rest
-        color: Theme.of(context)
-            .colorScheme
-            .onPrimary, // selected icon will be white
-      ),
-      unselectedIconTheme: const IconThemeData(
-        size: 24, // Size of non-selected icons
-        color: Colors.black,
-      ),
-      selectedLabelStyle: const TextStyle(
-        fontSize: 20, // When selected make text bigger
-        fontWeight: FontWeight.w400, // and bolder but not so thick
-      ),
-      unselectedLabelStyle: const TextStyle(
-        fontSize: 16,
-        color: Colors.black,
-      ),
+    
       onTap: _onItemTapped,
+      
+      
+    ),
+    body: pages[widget.navItemIndex],
     );
+    
+    
   }
 }
