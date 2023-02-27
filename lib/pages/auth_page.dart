@@ -15,24 +15,32 @@ class AuthFormWidget extends StatefulWidget {
 
 class _AuthFormWidgetState extends State<AuthFormWidget> {
   Dio_Client _dio = Dio_Client();
-  bool successAuth = false; 
-  String? failedAuth = "Sorry, auth failed";
+  bool successAuth = false;
+  String? authMessage;
 
   void authWidget() async {
-    User? user = User(password: passwordController.text, email: null,
-       accessToken: null, isActive: null, hashPassword: null, 
-      id: null, refreshToken: null, salt: null, userName: emailController.text);
-      ModelResponse? modelResponse = await _dio.authUser(user: user);
-      print(modelResponse!.data); 
+    User? user = User(
+        password: passwordController.text,
+        email: null,
+        accessToken: null,
+        isActive: null,
+        hashPassword: null,
+        id: null,
+        refreshToken: null,
+        salt: null,
+        userName: emailController.text);
+    ModelResponse? modelResponse = await _dio.authUser(user: user);
+    print(modelResponse!.data);
 
     setState(() {
-            if (modelResponse.data != null) {
-        successAuth = true;
-        print(modelResponse.data.userName); 
+      if (modelResponse.data != null) {
+        User? userFromJson = User.fromJson(modelResponse.data);
+        print(userFromJson.userName);
+      } else {
+        print(modelResponse.message);
       }
-      else {
-        print (modelResponse.message); 
-      }
+
+      authMessage = modelResponse.message;
     });
   }
 
@@ -106,7 +114,6 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
       textAlign: TextAlign.center,
     ));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +222,7 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                 ElevatedButton(
                   onPressed: () {
                     if (!registerAuthMode) {
-                      authWidget();  
+                      authWidget();
                     }
                   },
                   child: Text(registerAuthMode ? 'Register' : 'Sign In'),
@@ -237,14 +244,13 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                     : "Don't have an account yet?"),
                 TextButton(
                   onPressed: () {
-                      setState(() => registerAuthMode = !registerAuthMode); 
-                      
-                      },
+                    setState(() => registerAuthMode = !registerAuthMode);
+                  },
                   child: Text(registerAuthMode ? "Sign In" : "Regsiter"),
                 )
               ],
             ),
-            Text(successAuth ? "Successfully logged in": "")
+            Text(authMessage ?? " ")
           ],
         ),
       ),
