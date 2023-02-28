@@ -27,10 +27,8 @@ class ProfilePageEditStateful extends StatefulWidget {
 }
 
 class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
-  
-
   final AuthValidators authValidator = AuthValidators();
-  
+
   // controllers
   late TextEditingController emailController;
   late TextEditingController usernameController;
@@ -47,7 +45,6 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
   _ProfilePageEditStateful({required this.token});
 
   final Dio_Client _client = Dio_Client();
-
 
   @override
   void initState() {
@@ -114,23 +111,74 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                       Padding(
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 10, left: 10),
-                        child: Container(
+                        child:  Container(
                             color: Colors.grey,
                             width: double.infinity,
                             height: 1),
                       ),
 
                       DynamicInputWidget(
-              controller: emailController,
-              obscureText: false,
-              focusNode: emailFocusNode,
-              toggleObscureText: null,
-              validator: authValidator.emailValidator,
-              prefIcon: const Icon(Icons.mail),
-              labelText: "Enter Email Address",
-              textInputAction: TextInputAction.next,
-              isNonPasswordField: true,
-            ),
+                        controller: emailController,
+                        obscureText: false,
+                        focusNode: emailFocusNode,
+                        toggleObscureText: null,
+                        validator: authValidator.emailValidator,
+                        prefIcon: const Icon(Icons.mail),
+                        labelText: "Enter Email Address",
+                        textInputAction: TextInputAction.next,
+                        isNonPasswordField: true,
+                      ),
+
+                      const Padding(
+                        padding: EdgeInsets.only(
+                            top: 10, bottom: 10, right: 10, left: 10),
+                        ),
+
+                      DynamicInputWidget(
+                        controller: usernameController,
+                        obscureText: false,
+                        focusNode: usernameFocusNode,
+                        toggleObscureText: null,
+                        validator: authValidator.emailValidator,
+                        prefIcon: const Icon(Icons.account_circle_outlined),
+                        labelText: "Enter username",
+                        textInputAction: TextInputAction.next,
+                        isNonPasswordField: true,
+                      ),
+
+                      const Padding(
+                        padding: EdgeInsets.only(
+                            top: 10, bottom: 10, right: 10, left: 10),
+                        ),
+
+                      DynamicInputWidget(
+                        controller: passwordController,
+                        obscureText: false,
+                        focusNode: usernameFocusNode,
+                        toggleObscureText: null,
+                        validator: authValidator.passwordVlidator,
+                        prefIcon: const Icon(Icons.password),
+                        labelText: "Old Password",
+                        textInputAction: TextInputAction.next,
+                        isNonPasswordField: true,
+                      ),
+
+                      const Padding(
+                        padding: EdgeInsets.only(
+                            top: 10, bottom: 10, right: 10, left: 10),
+                        ),
+
+                      DynamicInputWidget(
+                        controller: confirmPasswordController,
+                        obscureText: false,
+                        focusNode: confirmPasswordFocusNode,
+                        toggleObscureText: null,
+                        validator: authValidator.passwordVlidator,
+                        prefIcon: const Icon(Icons.password),
+                        labelText: "New password",
+                        textInputAction: TextInputAction.next,
+                        isNonPasswordField: true,
+                      ),
 
                       Expanded(
                           child: Align(
@@ -139,13 +187,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                          return ProfilePageEdit(
-                                              token: widget.token!);
-                                        },
-                                      ));
+                                      updateAccount(); 
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Color.fromRGBO(3, 158, 162, 1),

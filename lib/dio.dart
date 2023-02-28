@@ -42,6 +42,44 @@ class Dio_Client {
     return encodedUser;
   }
 
+  Future<User?> updateProfile({required String id, required String token, required User user,
+   required String newPassword, required String oldPassword }) async {
+    User? encodedUser;
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
+
+      Response updateProfileResponse = await _dio.post(
+        _baseUrl + 'user',
+        data: user.toJson(),
+        options: Options(receiveDataWhenStatusError: true));
+
+      ModelResponse? modelProfileResponse = ModelResponse.fromJson(updateProfileResponse.data); 
+      encodedUser = User.fromJson(modelProfileResponse.data); 
+
+      Response updatePasswordResponse = await _dio.put(
+        _baseUrl + 'user', 
+        queryParameters: {'newPassword': newPassword, 'oldPassword': oldPassword }
+      );
+
+      ModelResponse? modelPasswordResponse = ModelResponse.fromJson(updatePasswordResponse.data);
+
+
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+
+    return encodedUser;
+  }
+
   Future<ModelResponse?> authUser({required User user}) async {
     ModelResponse? retrievedUser;
     User? encodedUser;

@@ -1,4 +1,5 @@
 import 'package:dart_interface/dio.dart';
+import 'package:dart_interface/globals/settings/utils/router_utils.dart';
 import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -106,13 +107,13 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("${userInfo.email}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           fontWeight: FontWeight.w700,
                                           fontSize: 17.0,
                                           color: Colors.black,
                                         )),
-                                    Text("E-mail",
+                                    const Text("E-mail",
                                         style: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           fontWeight: FontWeight.w400,
@@ -192,16 +193,14 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      // Navigator.of(context)
-                                      //     .push(MaterialPageRoute(
-                                      //   builder: (BuildContext context) {
-                                          
-                                      //     return ProfilePageEdit(
-                                      //         token: widget.token!);
-                                      //   },
-                                      // ));
-                                        GoRouter.of(context).goNamed(_widgetOptions[0], queryParams: {'token': widget.token});
-
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return ProfilePageEdit(
+                                              token: widget.token!);
+                                        },
+                                      ));
+                                      // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Color.fromRGBO(3, 158, 162, 1),
