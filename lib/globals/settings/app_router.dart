@@ -1,6 +1,7 @@
 import 'package:dart_interface/globals/settings/utils/router_utils.dart';
 import 'package:dart_interface/pages/home_page.dart';
 import 'package:dart_interface/pages/profile_page.dart';
+import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dart_interface/pages/screens/auth_screen.dart';
 import 'package:dart_interface/pages/widgets/buttom_navbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,14 @@ class AppRouter {
             builder: (context, state) =>  ProfilePage(
               token: state.queryParams['token']!
             )),
+
+        GoRoute(
+            path: APP_PAGE.profile_edit.routePath,
+            name: APP_PAGE.profile_edit.routeName,
+            builder: (context, state) => ProfilePageEdit(
+              token: state.queryParams['token']!
+            )
+          ),
       ],
       redirect: (state) {
         // define the named path of onboard screen

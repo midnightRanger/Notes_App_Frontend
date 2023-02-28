@@ -3,6 +3,7 @@ import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../domain/models/user.dart';
 
@@ -42,11 +43,7 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return 
-      
-
-    Center(
+    return Center(
       child: Padding(
           padding: EdgeInsets.all(10.0),
           child: FutureBuilder<User?>(
@@ -190,28 +187,35 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
 
                       Expanded(
                           child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child:  Container(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                                    Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-            return  ProfilePageEdit(token: widget.token!);
-          },
-        ));
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Color.fromRGBO(3, 158, 162, 1),
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(10.0),
-                              ),
-                              minimumSize: Size(42, 42),
-                            ),
-                            child: Text("Update profile",
-                                style: Theme.of(context).textTheme.bodyText1)),
-                      )))
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      // Navigator.of(context)
+                                      //     .push(MaterialPageRoute(
+                                      //   builder: (BuildContext context) {
+                                          
+                                      //     return ProfilePageEdit(
+                                      //         token: widget.token!);
+                                      //   },
+                                      // ));
+                                        GoRouter.of(context).goNamed(_widgetOptions[0], queryParams: {'token': widget.token});
+
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(3, 158, 162, 1),
+                                      shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0),
+                                      ),
+                                      minimumSize: Size(42, 42),
+                                    ),
+                                    child: Text("Update profile",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1)),
+                              )))
                       // SizedBox(height: 8.0),
                       // Text(
                       //   '${userInfo.userName} ${userInfo.email}',
