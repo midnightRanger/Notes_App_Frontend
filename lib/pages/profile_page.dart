@@ -1,4 +1,5 @@
 import 'package:dart_interface/dio.dart';
+import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,11 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    
+    return 
+      
+
+    Center(
       child: Padding(
           padding: EdgeInsets.all(10.0),
           child: FutureBuilder<User?>(
@@ -74,7 +79,7 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
 
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20, bottom: 20, right: 10, left: 10),
+                            top: 10, bottom: 10, right: 10, left: 10),
                         child: Container(
                             color: Colors.grey,
                             width: double.infinity,
@@ -123,6 +128,90 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
                         ),
                       ),
 
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20, bottom: 20, right: 10, left: 10),
+                        child: Container(
+                            color: Colors.grey,
+                            width: double.infinity,
+                            height: 1),
+                      ),
+
+                      Container(
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromRGBO(3, 158, 162, 1),
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0),
+                                  ),
+                                  minimumSize: Size(42, 42),
+                                ),
+                                child: Icon(
+                                  Icons.man,
+                                  size: 20,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(left: 13, right: 120),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("${userInfo.userName}",
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 17.0,
+                                          color: Colors.black,
+                                        )),
+                                    Text("User name",
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12.0,
+                                          color: Colors.grey,
+                                        ))
+                                  ],
+                                )),
+                          ],
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 10, bottom: 10, right: 10, left: 10),
+                        child: Container(
+                            color: Colors.grey,
+                            width: double.infinity,
+                            height: 1),
+                      ),
+
+                      Expanded(
+                          child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child:  Container(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                                    Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+            return  ProfilePageEdit(token: widget.token!);
+          },
+        ));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(3, 158, 162, 1),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0),
+                              ),
+                              minimumSize: Size(42, 42),
+                            ),
+                            child: Text("Update profile",
+                                style: Theme.of(context).textTheme.bodyText1)),
+                      )))
                       // SizedBox(height: 8.0),
                       // Text(
                       //   '${userInfo.userName} ${userInfo.email}',

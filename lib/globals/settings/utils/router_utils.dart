@@ -3,6 +3,7 @@ enum APP_PAGE {
   register,
   home,
   profile,
+  profile_edit,
   onboard
 }
 
@@ -21,6 +22,9 @@ extension AppPageExtension on APP_PAGE {
       
       case APP_PAGE.profile:
         return "/profile";
+
+      case APP_PAGE.profile_edit:
+        return "/profileedit";
 
       case APP_PAGE.onboard:
         return "/onboard";
@@ -44,6 +48,9 @@ extension AppPageExtension on APP_PAGE {
 
       case APP_PAGE.profile:
         return "profile";
+      
+      case APP_PAGE.profile_edit:
+        return "profileedit";
 
       case APP_PAGE.onboard:
         return "profile";
@@ -65,6 +72,9 @@ extension AppPageExtension on APP_PAGE {
 
       case APP_PAGE.profile:
         return "Profile";
+
+      case APP_PAGE.profile_edit:
+        return "Profile Edit";
 
       case APP_PAGE.onboard:
         return "On Board";
