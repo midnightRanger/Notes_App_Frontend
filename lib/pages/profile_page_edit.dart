@@ -44,7 +44,40 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
   String token;
   _ProfilePageEditStateful({required this.token});
 
-  final Dio_Client _client = Dio_Client();
+  final Dio_Client _dio = Dio_Client();
+
+  Future<AlertDialog> updateAccount() async {
+    User? user = User(
+        password: passwordController.text,
+        email: emailController.text,
+        accessToken: null,
+        isActive: null,
+        hashPassword: null,
+        id: null,
+        refreshToken: null,
+        salt: null,
+        userName: emailController.text);
+    String? message = await _dio.updateProfile(user: user, oldPassword: passwordController.text, newPassword: confirmPasswordController.text, token: widget.token!);  
+    print(message);
+
+    setState(() {
+
+       AlertDialog(
+                  title: const Text('Information'),
+                  content: Text(
+                      'Updating account information: ${message ?? "Something went wrong"}'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+    
+    });
+  }
 
   @override
   void initState() {

@@ -14,7 +14,7 @@ class Dio_Client {
 
   final _baseUrl = "http://localhost:5781/";
 
-  Future<User?> getProfile({required String id, required String token}) async {
+  Future<User?> getProfile({required String token}) async {
     User? encodedUser;
     try {
       _dio.options.headers['Authorization'] = 'Bearer ${token}';
@@ -42,9 +42,13 @@ class Dio_Client {
     return encodedUser;
   }
 
-  Future<User?> updateProfile({required String id, required String token, required User user,
+  Future<String?> updateProfile({required String token, required User user,
    required String newPassword, required String oldPassword }) async {
     User? encodedUser;
+
+    ModelResponse? modelProfileResponse;
+    ModelResponse? modelPasswordResponse;
+
     try {
       _dio.options.headers['Authorization'] = 'Bearer ${token}';
 
@@ -53,7 +57,7 @@ class Dio_Client {
         data: user.toJson(),
         options: Options(receiveDataWhenStatusError: true));
 
-      ModelResponse? modelProfileResponse = ModelResponse.fromJson(updateProfileResponse.data); 
+      modelProfileResponse = ModelResponse.fromJson(updateProfileResponse.data); 
       encodedUser = User.fromJson(modelProfileResponse.data); 
 
       Response updatePasswordResponse = await _dio.put(
@@ -61,7 +65,7 @@ class Dio_Client {
         queryParameters: {'newPassword': newPassword, 'oldPassword': oldPassword }
       );
 
-      ModelResponse? modelPasswordResponse = ModelResponse.fromJson(updatePasswordResponse.data);
+       modelPasswordResponse = ModelResponse.fromJson(updatePasswordResponse.data);
 
 
     } on DioError catch (e) {
@@ -77,7 +81,7 @@ class Dio_Client {
       }
     }
 
-    return encodedUser;
+    return "Information: ${modelProfileResponse!.message}, ${modelPasswordResponse!.message}";
   }
 
   Future<ModelResponse?> authUser({required User user}) async {
