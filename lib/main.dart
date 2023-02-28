@@ -10,14 +10,15 @@ import 'globals/provider/app_state_provider.dart';
 import 'globals/settings/app_router.dart';
 
 Future<void> main() async {
-  //  concrete binding for applications based on the Widgets framewor
+//  concrete binding for applications based on the Widgets framewor
   WidgetsFlutterBinding.ensureInitialized();
-
 // Instantiate shared pref
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.black38),
-  );
+
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.black38),
+  // );
+  
 // Pass prefs as value in MyApp
   runApp(MyApp(prefs: prefs));
 }
@@ -47,7 +48,8 @@ class _MyAppState extends State<MyApp> {
 
           return MaterialApp.router(
               routeInformationParser: router.routeInformationParser,
-              routerDelegate: router.routerDelegate);
+              routerDelegate: router.routerDelegate,
+              );
         }),
       ),
     );

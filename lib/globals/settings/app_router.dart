@@ -2,6 +2,8 @@ import 'package:dart_interface/globals/settings/utils/router_utils.dart';
 import 'package:dart_interface/pages/home_page.dart';
 import 'package:dart_interface/pages/profile_page.dart';
 import 'package:dart_interface/pages/screens/auth_screen.dart';
+import 'package:dart_interface/pages/widgets/buttom_navbar_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,12 +26,13 @@ class AppRouter {
       refreshListenable: appStateProvider,
       initialLocation: "/",
       routes: [
+
          GoRoute(
             path: APP_PAGE.auth.routePath,
             name: APP_PAGE.auth.routeName,
             builder: (context, state) => const AuthScreen()
-          ),
-        // Add the onboard Screen
+          ),      
+      
         GoRoute(
           path: APP_PAGE.home.routePath,
           name: APP_PAGE.home.routeName,

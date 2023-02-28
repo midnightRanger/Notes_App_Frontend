@@ -33,12 +33,15 @@ class _ProfilePageStateful extends State<ProfilePageStateful>  {
   _ProfilePageStateful({required this.token});
   
   final Dio_Client _client = Dio_Client();
+  @override
+  void initState() {
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-   
-    return Scaffold(
-      body:  Center(
+    return Center(
         child: FutureBuilder<User?>(
           future: _client.getProfile(id: '1', token: widget.token!),
           builder: (context, snapshot) {
@@ -46,13 +49,19 @@ class _ProfilePageStateful extends State<ProfilePageStateful>  {
               User? userInfo = snapshot.data;
               if (userInfo != null) {
                  return Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 8.0),
-                    Text(
-                      '${userInfo.userName} ${userInfo.email}',
-                      style: TextStyle(fontSize: 16.0),
-                    )
+                     ClipRRect(
+                      child: Text("Hello there")
+                      ),
+                      
+
+
+
+                    // SizedBox(height: 8.0),
+                    // Text(
+                    //   '${userInfo.userName} ${userInfo.email}',
+                    //   style: TextStyle(fontSize: 16.0),
+                    // )
                   ],
                  );
               }
@@ -61,7 +70,6 @@ class _ProfilePageStateful extends State<ProfilePageStateful>  {
             return CircularProgressIndicator();
           }
         ),
-      ),
       
     );
   }
