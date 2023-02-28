@@ -13,7 +13,9 @@ ThemeData _mainTheme() {
       onSecondary: Colors.white, 
       background: Color.fromARGB(255, 165, 198, 159),
       onBackground: Colors.black,
-    )
+    ),
+    textTheme: _mainTextTheme(base.textTheme),
+    elevatedButtonTheme: _elevatedButtonTheme(base.elevatedButtonTheme),
   );
 
 }
@@ -54,4 +56,29 @@ TextTheme _mainTextTheme(TextTheme base) => base.copyWith(
           color: Colors.black),
     );
 
-)
+ElevatedButtonThemeData _elevatedButtonTheme(ElevatedButtonThemeData base) =>
+    ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          Color.fromARGB(255, 129, 193, 99),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      ),
+    );
+
+
+InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base) =>
+    const InputDecorationTheme(
+// Label color for the input widget 
+      labelStyle: TextStyle(color: Colors.black),
+// Define border of input form while focused on 
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1.0,
+          color: Colors.black,
+          style: BorderStyle.solid,
+        ),
+      ),
+    );
+
+    

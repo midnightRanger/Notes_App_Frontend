@@ -1,3 +1,4 @@
+import 'package:dart_interface/globals/theme/app_theme.dart';
 import 'package:dart_interface/pages/home_page.dart';
 import 'package:dart_interface/pages/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
 
           return MaterialApp.router(
               routeInformationParser: router.routeInformationParser,
+              theme: mainTheme,
               routerDelegate: router.routerDelegate,
               );
         }),
