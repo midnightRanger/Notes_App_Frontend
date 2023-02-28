@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -45,8 +47,9 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
   _ProfilePageEditStateful({required this.token});
 
   final Dio_Client _dio = Dio_Client();
+  String? profileUpdateMessage;
 
-  Future<AlertDialog> updateAccount() async {
+  Future<AlertDialog?> updateAccount(BuildContext context) async {
     User? user = User(
         password: passwordController.text,
         email: emailController.text,
@@ -57,26 +60,36 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
         refreshToken: null,
         salt: null,
         userName: emailController.text);
-    String? message = await _dio.updateProfile(user: user, oldPassword: passwordController.text, newPassword: confirmPasswordController.text, token: widget.token!);  
+    String? message = await _dio.updateProfile(
+        user: user,
+        oldPassword: passwordController.text,
+        newPassword: confirmPasswordController.text,
+        token: widget.token!);
     print(message);
 
-    setState(() {
+    AlertDialog alert = AlertDialog(
+      title: const Text('Thanks!'),
+      content: Text(message!),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
-       AlertDialog(
-                  title: const Text('Information'),
-                  content: Text(
-                      'Updating account information: ${message ?? "Something went wrong"}'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ],
-                );
-    
-    });
+  updatingTextEditingControllers(User? userInfo) {
+    emailController.text = userInfo!.email!;
+    usernameController.text = userInfo.userName!;
   }
 
   @override
@@ -112,13 +125,14 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: FutureBuilder<User?>(
-              future: _client.getProfile(id: '1', token: widget.token!),
+              future: _dio.getProfile(token: widget.token!),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   User? userInfo = snapshot.data;
                   if (userInfo != null) {
+                    updatingTextEditingControllers(userInfo);
                     return Column(children: [
                       Row(
                         children: [
@@ -144,7 +158,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                       Padding(
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 10, left: 10),
-                        child:  Container(
+                        child: Container(
                             color: Colors.grey,
                             width: double.infinity,
                             height: 1),
@@ -165,7 +179,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                       const Padding(
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 10, left: 10),
-                        ),
+                      ),
 
                       DynamicInputWidget(
                         controller: usernameController,
@@ -182,12 +196,12 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                       const Padding(
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 10, left: 10),
-                        ),
+                      ),
 
                       DynamicInputWidget(
                         controller: passwordController,
                         obscureText: false,
-                        focusNode: usernameFocusNode,
+                        focusNode: passwordFocusNode,
                         toggleObscureText: null,
                         validator: authValidator.passwordVlidator,
                         prefIcon: const Icon(Icons.password),
@@ -199,7 +213,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                       const Padding(
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 10, left: 10),
-                        ),
+                      ),
 
                       DynamicInputWidget(
                         controller: confirmPasswordController,
@@ -220,7 +234,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      updateAccount(); 
+                                      updateAccount(context);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Color.fromRGBO(3, 158, 162, 1),

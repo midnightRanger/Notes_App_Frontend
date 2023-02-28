@@ -214,7 +214,7 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                   toggleObscureText: toggleObscureText,
                   validator: (val) => authValidator.confirmPasswordValidator(
                       val, passwordController.text),
-                ),
+                      ),
               ),
             ),
             const SizedBox(

@@ -48,7 +48,7 @@ class _ProfilePageStateful extends State<ProfilePageStateful> {
       child: Padding(
           padding: EdgeInsets.all(10.0),
           child: FutureBuilder<User?>(
-              future: _client.getProfile(id: '1', token: widget.token!),
+              future: _client.getProfile(token: widget.token!),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   User? userInfo = snapshot.data;
