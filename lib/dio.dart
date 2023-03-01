@@ -73,6 +73,34 @@ class Dio_Client {
     }
   }
 
+  Future<Post?> getNote({required String token, required int id}) async {
+    Post? encodedNote;
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
+
+      Response rawResponse = await _dio.get(_baseUrl + 'post/${id}');
+
+      print('User info: ${rawResponse.data}');
+
+      ModelResponse? modelResponse = ModelResponse.fromJson(rawResponse.data);
+
+      encodedNote = Post.fromJson(modelResponse.data);
+
+      return encodedNote;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
+
   Future<String?> updateProfile(
       {required String token,
       required User user,
