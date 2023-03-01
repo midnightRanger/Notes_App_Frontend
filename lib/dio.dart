@@ -1,7 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:dart_interface/interceptor/AuthInterceptor.dart';
 import 'package:dio/dio.dart';
 
 import 'domain/models/ModelResponse.dart';
+import 'domain/models/post.dart';
 import 'domain/models/user.dart';
 
 class Dio_Client {
@@ -23,9 +27,8 @@ class Dio_Client {
 
       print('User info: ${rawResponse.data}');
 
-      ModelResponse? modelResponse = ModelResponse.fromJson(rawResponse.data); 
-      encodedUser = User.fromJson(modelResponse.data); 
-
+      ModelResponse? modelResponse = ModelResponse.fromJson(rawResponse.data);
+      encodedUser = User.fromJson(modelResponse.data);
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
@@ -42,8 +45,8 @@ class Dio_Client {
     return encodedUser;
   }
 
-    Future<User?> getNotes({required String token}) async {
-    User? encodedUser;
+  Future<List<Post>?> getNotes({required String token}) async {
+    List<Post>? myPosts;
     try {
       _dio.options.headers['Authorization'] = 'Bearer ${token}';
 
@@ -51,9 +54,11 @@ class Dio_Client {
 
       print('Posts: ${rawResponse.data}');
 
-      ModelResponse? modelResponse = ModelResponse.fromJson(rawResponse.data); 
-      encodedUser = User.fromJson(modelResponse.data); 
+      List<Post> myPosts = (rawResponse.data as List).map((e) {
+        return Post.fromJson(e);
+      }).toList();
 
+     return myPosts; 
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
@@ -66,12 +71,13 @@ class Dio_Client {
         print(e.message);
       }
     }
-
-    return encodedUser;
   }
 
-  Future<String?> updateProfile({required String token, required User user,
-   required String newPassword, required String oldPassword }) async {
+  Future<String?> updateProfile(
+      {required String token,
+      required User user,
+      required String newPassword,
+      required String oldPassword}) async {
     User? encodedUser;
 
     ModelResponse? modelProfileResponse;
@@ -80,23 +86,22 @@ class Dio_Client {
     try {
       _dio.options.headers['Authorization'] = 'Bearer ${token}';
 
-      Response updateProfileResponse = await _dio.post(
-        _baseUrl + 'user',
-        data: user.toJson(),
-        options: Options(receiveDataWhenStatusError: true));
+      Response updateProfileResponse = await _dio.post(_baseUrl + 'user',
+          data: user.toJson(),
+          options: Options(receiveDataWhenStatusError: true));
 
-      modelProfileResponse = ModelResponse.fromJson(updateProfileResponse.data); 
-      encodedUser = User.fromJson(modelProfileResponse.data); 
+      modelProfileResponse = ModelResponse.fromJson(updateProfileResponse.data);
+      encodedUser = User.fromJson(modelProfileResponse.data);
 
-      Response updatePasswordResponse = await _dio.put(
-        _baseUrl + 'user', 
-        options: Options(receiveDataWhenStatusError: true),
-        queryParameters: {'newPassword': newPassword, 'oldPassword': oldPassword,  }
-      );
+      Response updatePasswordResponse = await _dio.put(_baseUrl + 'user',
+          options: Options(receiveDataWhenStatusError: true),
+          queryParameters: {
+            'newPassword': newPassword,
+            'oldPassword': oldPassword,
+          });
 
-       modelPasswordResponse = ModelResponse.fromJson(updatePasswordResponse.data);
-
-
+      modelPasswordResponse =
+          ModelResponse.fromJson(updatePasswordResponse.data);
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
@@ -104,9 +109,7 @@ class Dio_Client {
         print('DATA: ${e.response?.data}');
         print('HEADERS: ${e.response?.headers}');
 
-        
-        
-        return "Information: ${ModelResponse.fromJson(e.response!.data).message}"; 
+        return "Information: ${ModelResponse.fromJson(e.response!.data).message}";
       } else {
         // Error due to setting up or sending the request
         print('Error sending request!');
@@ -141,15 +144,15 @@ class Dio_Client {
         print('Dio error!');
         print('STATUS: ${e.response?.statusCode}');
         print('DATA: ${e.response?.data}');
-        print('HEADERS: ${e.response?.headers}');     
-        
-        return ModelResponse.fromJson(e.response!.data); 
+        print('HEADERS: ${e.response?.headers}');
+
+        return ModelResponse.fromJson(e.response!.data);
       } else {
         // Error due to setting up or sending the request
         print('Error sending request!');
         print(e.message);
-        return null; 
+        return null;
       }
     }
   }
-} 
+}

@@ -1,4 +1,5 @@
 import 'package:dart_interface/dio.dart';
+import 'package:dart_interface/domain/models/post.dart';
 import 'package:dart_interface/globals/settings/utils/router_utils.dart';
 import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
@@ -47,21 +48,42 @@ class _HomePageStateful extends State<HomePageStateful> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: SingleChildScrollView(
-          child: FutureBuilder<User?>(
-              future: _client.getProfile(token: widget.token!),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  User? userInfo = snapshot.data;
-                  if (userInfo != null) {
-                    return ListView(
-            children: snapshot.data!<Widget>((single) {
-          return Text('saddasd');
-        }).toList());
-                  }
-                }
-                return CircularProgressIndicator();
-              }),
-    ));
+        child: FutureBuilder<List<Post>?>(
+            future: _client.getNotes(token: widget.token!),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          snapshot.data![index].name!,
+                          textAlign: TextAlign.center,
+                        ),
+                        subtitle: 
+                        ConstrainedBox(
+                          constraints: new BoxConstraints(
+                            minHeight: 50.0
+                          ),
+                          child: 
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(242, 201, 76, 1),
+                              border: Border.all(
+                                color: Color.fromRGBO(242, 201, 76, 1),
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
+                            ),
+                            child: Text(snapshot.data![index].content!)
+                            ),
+                        ),
+                        
+                      );
+                    });
+              }
+
+              return CircularProgressIndicator();
+            }));
   }
 }
