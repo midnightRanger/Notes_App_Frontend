@@ -5,7 +5,6 @@ import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../domain/models/user.dart';
 
@@ -35,8 +34,6 @@ class HomePageStateful extends StatefulWidget {
 class _HomePageStateful extends State<HomePageStateful> {
   String token;
 
-  final List<String> users = ["Tom", "Alice", "Sam", "Bob", "Kate"];
-
   _HomePageStateful({required this.token});
 
   final Dio_Client _client = Dio_Client();
@@ -53,33 +50,114 @@ class _HomePageStateful extends State<HomePageStateful> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
-                    itemCount: snapshot.data?.length ?? 0,
+                    itemCount: snapshot.data!.length + 1,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          snapshot.data![index].name!,
-                          textAlign: TextAlign.center,
-                        ),
-                        subtitle: 
-                        ConstrainedBox(
-                          constraints: new BoxConstraints(
-                            minHeight: 50.0
+                      if (index < snapshot.data!.length!) {
+                        return ListTile(
+                          title: Text(
+                            snapshot.data![index].name!,
+                            textAlign: TextAlign.center,
                           ),
-                          child: 
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(242, 201, 76, 1),
-                              border: Border.all(
-                                color: Color.fromRGBO(242, 201, 76, 1),
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            child: Text(snapshot.data![index].content!)
-                            ),
-                        ),
-                        
-                      );
+                          subtitle: ConstrainedBox(
+                            constraints: new BoxConstraints(minHeight: 50.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(116, 154, 155, 1),
+                                  border: Border.all(
+                                    color: Color.fromRGBO(3, 158, 162, 1),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
+                                ),
+                                child: Column(children: [
+                                  Row(children: [
+                                    Text(snapshot.data![index].content!),
+                                    Expanded(flex: 1, child: SizedBox()),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                              return ProfilePageEdit(
+                                                  token: widget.token!);
+                                            },
+                                          ));
+                                          // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary:
+                                              Color.fromRGBO(10, 86, 88, 1),
+                                          shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(10.0),
+                                          ),
+                                          minimumSize: Size(30, 30),
+                                        ),
+                                        child: const Icon(Icons.delete))
+                                  ]),
+                                  SizedBox(height: 10.0),
+                                  Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Container(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return ProfilePageEdit(
+                                                        token: widget.token!);
+                                                  },
+                                                ));
+                                                // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Color.fromRGBO(
+                                                    10, 86, 88, 1),
+                                                shape:
+                                                    new RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                minimumSize: Size(42, 42),
+                                              ),
+                                              child: Text("Update",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1)))),
+                                ])),
+                          ),
+                        );
+                      } else {
+                        return Padding(padding: EdgeInsets.only(left: 15.0, right: 15.0), child:
+                        Container(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return ProfilePageEdit(
+                                          token: widget.token!);
+                                    },
+                                  ));
+                                  // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromRGBO(10, 86, 88, 1),
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0),
+                                  ),
+                                  minimumSize: Size(42, 42),
+                                ),
+                                child: Text("Update",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(color: Colors.white)))));
+                      }
                     });
               }
 

@@ -15,10 +15,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 // Instantiate shared pref
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.black38),
-  // );
   
 // Pass prefs as value in MyApp
   runApp(MyApp(prefs: prefs));

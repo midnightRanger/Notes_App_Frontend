@@ -7,9 +7,9 @@ ThemeData _mainTheme() {
 
   return base.copyWith(
     colorScheme: base.colorScheme.copyWith(
-      primary:const Color.fromARGB(255, 116, 215, 97),
+      primary:const Color.fromRGBO(3, 158, 162, 1),
       onPrimary: Colors.white,
-      secondary: const  Color.fromARGB(255, 50, 114, 37),
+      secondary: Color.fromARGB(255, 9, 117, 121),
       onSecondary: Colors.white, 
       background: Color.fromARGB(255, 165, 198, 159),
       onBackground: Colors.black,
@@ -47,13 +47,13 @@ TextTheme _mainTextTheme(TextTheme base) => base.copyWith(
           fontFamily: "Roboto",
           fontSize: 20,
           fontWeight: FontWeight.w300,
-          color: Colors.black),
+          color: Colors.white),
 // for sub-widgets contents/paragraph
       bodyText2: base.bodyText2!.copyWith(
           fontFamily: "Roboto",
           fontSize: 18,
           fontWeight: FontWeight.w300,
-          color: Colors.black),
+          color: Colors.white),
     );
 
 ElevatedButtonThemeData _elevatedButtonTheme(ElevatedButtonThemeData base) =>
