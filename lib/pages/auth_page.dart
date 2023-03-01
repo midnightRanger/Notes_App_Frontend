@@ -3,6 +3,7 @@ import 'package:dart_interface/pages/home_page.dart';
 import 'package:dart_interface/pages/widgets/buttom_navbar_widget.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../domain/models/ModelErrorResponse.dart';
 import '../domain/models/ModelResponse.dart';
@@ -37,22 +38,45 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
 
     setState(() {
       if (modelResponse != null) {
-        User userFromJson = User.fromJson(modelResponse!.data);
-        print(userFromJson.userName);
-        authMessage = "Welcome, ${userFromJson.userName}";
+      
 
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-            return  CustomBottomNavBar(navItemIndex: 1, token: userFromJson.accessToken!);
+        AlertDialog alert = AlertDialog(
+          title: const Text('Auth: '),
+          content: Text(modelResponse.message!),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                if (modelResponse.error!.isNotEmpty)
+                  Navigator.of(context, rootNavigator: true).pop();
+                else {
+                  User userFromJson = User.fromJson(modelResponse!.data);
+                  print(userFromJson.userName);
+                  authMessage = "Welcome, ${userFromJson.userName}";
+                  Navigator.of(context, rootNavigator: true).pop();
+
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return CustomBottomNavBar(
+                            navItemIndex: 1, token: userFromJson.accessToken!);
+                      },
+                    ),
+                  );
+                }
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
           },
-        ),
-
         );
       } else {
         authMessage = "Something went wrong...";
       }
-    
     });
   }
 
@@ -82,7 +106,6 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
 // Instantiate all the *text editing controllers* and focus nodes on *initState* function
   @override
   void initState() {
-    super.initState();
     emailController = TextEditingController();
     usernameController = TextEditingController();
     passwordController = TextEditingController();
@@ -92,6 +115,13 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
     usernameFocusNode = FocusNode();
     passwordFocusNode = FocusNode();
     confirmPasswordFocusNode = FocusNode();
+
+    Future.delayed(Duration.zero, () {
+      emailController.text = "";
+      passwordController.text = "";
+    });
+
+    super.initState();
   }
 
 // These all needs to be disposed of once done so let's do that as well.
@@ -214,7 +244,7 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
                   toggleObscureText: toggleObscureText,
                   validator: (val) => authValidator.confirmPasswordValidator(
                       val, passwordController.text),
-                      ),
+                ),
               ),
             ),
             const SizedBox(

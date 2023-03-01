@@ -59,7 +59,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
         id: null,
         refreshToken: null,
         salt: null,
-        userName: emailController.text);
+        userName: usernameController.text);
     String? message = await _dio.updateProfile(
         user: user,
         oldPassword: passwordController.text,
@@ -68,7 +68,7 @@ class _ProfilePageEditStateful extends State<ProfilePageEditStateful> {
     print(message);
 
     AlertDialog alert = AlertDialog(
-      title: const Text('Thanks!'),
+      title: const Text('Updating account: '),
       content: Text(message!),
       actions: <Widget>[
         TextButton(

@@ -75,7 +75,10 @@ class Dio_Client {
         print('STATUS: ${e.response?.statusCode}');
         print('DATA: ${e.response?.data}');
         print('HEADERS: ${e.response?.headers}');
-        return "Information: ${e.response?.data}"; 
+
+        
+        
+        return "Information: ${ModelResponse.fromJson(e.response!.data).message}"; 
       } else {
         // Error due to setting up or sending the request
         print('Error sending request!');
@@ -84,7 +87,7 @@ class Dio_Client {
       }
     }
 
-    return "Information: ${modelProfileResponse!.message}, ${modelPasswordResponse!.data}";
+    return "Information: ${modelProfileResponse.message}, ${modelPasswordResponse.data}";
   }
 
   Future<ModelResponse?> authUser({required User user}) async {
@@ -100,14 +103,25 @@ class Dio_Client {
 
       encodedUser = User.fromJson(retrievedUser.data);
       _dio.options.headers['Authorization'] =
-          'Bearer ${encodedUser?.accessToken}';
+          'Bearer ${encodedUser.accessToken}';
 
       print('[Auth] : ${response.data}');
 
       return retrievedUser;
-    } catch (e) {
-      print(e);
-      null;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');     
+        
+        return ModelResponse.fromJson(e.response!.data); 
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+        return null; 
+      }
     }
   }
-}
+} 
