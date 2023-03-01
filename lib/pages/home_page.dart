@@ -1,6 +1,7 @@
 import 'package:dart_interface/dio.dart';
 import 'package:dart_interface/domain/models/post.dart';
 import 'package:dart_interface/globals/settings/utils/router_utils.dart';
+import 'package:dart_interface/pages/note_edit_page.dart';
 import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -102,12 +103,13 @@ class _HomePageStateful extends State<HomePageStateful> {
                                           width: double.infinity,
                                           child: ElevatedButton(
                                               onPressed: () {
+
                                                 Navigator.of(context)
                                                     .push(MaterialPageRoute(
                                                   builder:
                                                       (BuildContext context) {
-                                                    return ProfilePageEdit(
-                                                        token: widget.token!);
+                                                    return NoteEditPage(
+                                                        token: widget.token!, id: snapshot.data![index].id!);
                                                   },
                                                 ));
                                                 // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});

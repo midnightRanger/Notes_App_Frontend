@@ -101,6 +101,41 @@ class Dio_Client {
     }
   }
 
+    Future<String?> updateNote(
+      {required String token,
+      required int id,
+      required String content,
+      required String name}) async {
+
+        ModelResponse modelResponse;
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
+
+      Response updateNoteResponse = await _dio.put(_baseUrl + 'post/${id}',
+          data: {'name': name, 'content': content},
+          options: Options(receiveDataWhenStatusError: true));
+
+      modelResponse = ModelResponse.fromJson(updateNoteResponse.data);
+      
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+
+        return "Information: ${ModelResponse.fromJson(e.response!.data).message}";
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+        return "Information: ${e.message}";
+      }
+    }
+
+    return "Information: ${modelResponse.message}";
+  }
+
   Future<String?> updateProfile(
       {required String token,
       required User user,
