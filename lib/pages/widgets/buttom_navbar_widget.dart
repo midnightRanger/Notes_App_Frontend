@@ -20,7 +20,7 @@ class CustomBottomNavBar extends StatefulWidget {
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  final List<Widget> pages = [AuthScreen(), HomePage(), ProfilePage(token: "")];
+  final List<Widget> pages = [AuthScreen(), HomePage(token: "",), ProfilePage(token: "")];
 
   // Make a list of routes that you'll want to go to
   static final List<String> _widgetOptions = [
@@ -32,6 +32,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 @override
   void initState() {
     pages[2] = ProfilePage(token: widget.token);
+    pages[1] = HomePage(token: widget.token);
     super.initState();
   }
 

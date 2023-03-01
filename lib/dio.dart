@@ -42,6 +42,34 @@ class Dio_Client {
     return encodedUser;
   }
 
+    Future<User?> getNotes({required String token}) async {
+    User? encodedUser;
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
+
+      Response rawResponse = await _dio.get(_baseUrl + 'post');
+
+      print('Posts: ${rawResponse.data}');
+
+      ModelResponse? modelResponse = ModelResponse.fromJson(rawResponse.data); 
+      encodedUser = User.fromJson(modelResponse.data); 
+
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+
+    return encodedUser;
+  }
+
   Future<String?> updateProfile({required String token, required User user,
    required String newPassword, required String oldPassword }) async {
     User? encodedUser;

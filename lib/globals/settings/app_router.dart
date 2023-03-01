@@ -37,7 +37,9 @@ class AppRouter {
         GoRoute(
           path: APP_PAGE.home.routePath,
           name: APP_PAGE.home.routeName,
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => HomePage(
+            token: state.queryParams['token']!
+          ),
         ),
        
 
