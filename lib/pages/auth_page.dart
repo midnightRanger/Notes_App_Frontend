@@ -38,8 +38,6 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
 
     setState(() {
       if (modelResponse != null) {
-      
-
         AlertDialog alert = AlertDialog(
           title: const Text('Auth: '),
           content: Text(modelResponse.message!),
@@ -162,141 +160,139 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Form(
-        key: _formKey,
-        child: 
-        Column(
-          children: [
-            // Email
-            DynamicInputWidget(
-              controller: emailController,
-              obscureText: false,
-              focusNode: emailFocusNode,
-              toggleObscureText: null,
-              validator: authValidator.emailValidator,
-              prefIcon: const Icon(Icons.mail),
-              labelText: "Enter Email Address",
-              textInputAction: TextInputAction.next,
-              isNonPasswordField: true,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            // Username
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              height: registerAuthMode ? 65 : 0,
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-                opacity: registerAuthMode ? 1 : 0,
-                child: DynamicInputWidget(
-                  controller: usernameController,
-                  obscureText: false,
-                  focusNode: usernameFocusNode,
-                  toggleObscureText: null,
-                  validator: null,
-                  prefIcon: const Icon(Icons.person),
-                  labelText: "Enter Username(Optional)",
-                  textInputAction: TextInputAction.next,
-                  isNonPasswordField: true,
-                ),
+          key: _formKey,
+          child: Column(
+            children: [
+              // Email
+              DynamicInputWidget(
+                controller: emailController,
+                obscureText: false,
+                focusNode: emailFocusNode,
+                toggleObscureText: null,
+                validator: authValidator.emailValidator,
+                prefIcon: const Icon(Icons.mail),
+                labelText: "Enter Email Address",
+                textInputAction: TextInputAction.next,
+                isNonPasswordField: true,
               ),
-            ),
-
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 500),
-              opacity: registerAuthMode ? 1 : 0,
-              child: const SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-            ),
-
-            DynamicInputWidget(
-              controller: passwordController,
-              labelText: "Enter Password",
-              obscureText: obscureText,
-              focusNode: passwordFocusNode,
-              toggleObscureText: toggleObscureText,
-              validator: authValidator.passwordVlidator,
-              prefIcon: const Icon(Icons.password),
-              textInputAction: registerAuthMode
-                  ? TextInputAction.next
-                  : TextInputAction.done,
-              isNonPasswordField: false,
-            ),
-
-            const SizedBox(
-              height: 20,
-            ),
-
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              height: registerAuthMode ? 65 : 0,
-              child: AnimatedOpacity(
+              // Username
+              AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
-                opacity: registerAuthMode ? 1 : 0,
-                child: DynamicInputWidget(
-                  controller: confirmPasswordController,
-                  focusNode: confirmPasswordFocusNode,
-                  isNonPasswordField: false,
-                  labelText: "Confirm Password",
-                  obscureText: obscureText,
-                  prefIcon: const Icon(Icons.password),
-                  textInputAction: TextInputAction.done,
-                  toggleObscureText: toggleObscureText,
-                  validator: (val) => authValidator.confirmPasswordValidator(
-                      val, passwordController.text),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Cancel'),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (!registerAuthMode) {
-                      authWidget();
-                    }
-                  },
-                  child: Text(registerAuthMode ? 'Register' : 'Sign In'),
-                  style: ButtonStyle(
-                    elevation: MaterialStateProperty.all(8.0),
+                height: registerAuthMode ? 65 : 0,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: registerAuthMode ? 1 : 0,
+                  child: DynamicInputWidget(
+                    controller: usernameController,
+                    obscureText: false,
+                    focusNode: usernameFocusNode,
+                    toggleObscureText: null,
+                    validator: null,
+                    prefIcon: const Icon(Icons.person),
+                    labelText: "Enter Username(Optional)",
+                    textInputAction: TextInputAction.next,
+                    isNonPasswordField: true,
                   ),
                 ),
-              ],
-            ),
+              ),
 
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(registerAuthMode
-                    ? "Already Have an account?"
-                    : "Don't have an account yet?"),
-                TextButton(
-                  onPressed: () {
-                    setState(() => registerAuthMode = !registerAuthMode);
-                  },
-                  child: Text(registerAuthMode ? "Sign In" : "Regsiter"),
-                )
-              ],
-            ),
-            Text(authMessage ?? " ")
-          ],
-        )),
-      );
-    
+              AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                opacity: registerAuthMode ? 1 : 0,
+                child: const SizedBox(
+                  height: 20,
+                ),
+              ),
+
+              DynamicInputWidget(
+                controller: passwordController,
+                labelText: "Enter Password",
+                obscureText: obscureText,
+                focusNode: passwordFocusNode,
+                toggleObscureText: toggleObscureText,
+                validator: authValidator.passwordVlidator,
+                prefIcon: const Icon(Icons.password),
+                textInputAction: registerAuthMode
+                    ? TextInputAction.next
+                    : TextInputAction.done,
+                isNonPasswordField: false,
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                height: registerAuthMode ? 65 : 0,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: registerAuthMode ? 1 : 0,
+                  child: DynamicInputWidget(
+                    controller: confirmPasswordController,
+                    focusNode: confirmPasswordFocusNode,
+                    isNonPasswordField: false,
+                    labelText: "Confirm Password",
+                    obscureText: obscureText,
+                    prefIcon: const Icon(Icons.password),
+                    textInputAction: TextInputAction.done,
+                    toggleObscureText: toggleObscureText,
+                    validator: (val) => authValidator.confirmPasswordValidator(
+                        val, passwordController.text),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Cancel'),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (!registerAuthMode) {
+                        authWidget();
+                      }
+                    },
+                    child: Text(registerAuthMode ? 'Register' : 'Sign In'),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(8.0),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(registerAuthMode
+                      ? "Already Have an account?"
+                      : "Don't have an account yet?"),
+                  TextButton(
+                    onPressed: () {
+                      setState(() => registerAuthMode = !registerAuthMode);
+                    },
+                    child: Text(registerAuthMode ? "Sign In" : "Regsiter"),
+                  )
+                ],
+              ),
+              Text(authMessage ?? " ")
+            ],
+          )),
+    );
   }
 }

@@ -21,7 +21,13 @@ class CustomBottomNavBar extends StatefulWidget {
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  final List<Widget> pages = [AuthScreen(), HomePage(token: "",), ProfilePage(token: "")];
+  final List<Widget> pages = [
+    AuthScreen(),
+    HomePage(
+      token: "",
+    ),
+    ProfilePage(token: "")
+  ];
 
   // Make a list of routes that you'll want to go to
   static final List<String> _widgetOptions = [
@@ -30,7 +36,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     APP_PAGE.profile.routeName,
   ];
 
-@override
+  @override
   void initState() {
     pages[2] = ProfilePage(token: widget.token);
     pages[1] = HomePage(token: widget.token);
@@ -40,19 +46,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 // Function that handles navigation based of index received
   void _onItemTapped(int index) {
     if (index == 0) {
-    //  GoRouter.of(context).goNamed(_widgetOptions[0], queryParams: {'token': widget.token});
+      //  GoRouter.of(context).goNamed(_widgetOptions[0], queryParams: {'token': widget.token});
 
-    Navigator.of(context).pop(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-            return AuthScreen(); 
-          },
-        ));
+      Navigator.of(context).pop(MaterialPageRoute(
+        builder: (BuildContext context) {
+          return AuthScreen();
+        },
+      ));
     }
     setState(() {
-      
-
-    widget.navItemIndex = index;
+      widget.navItemIndex = index;
     });
   }
 
