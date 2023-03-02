@@ -70,9 +70,14 @@ class _HomePageStateful extends State<HomePageStateful> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.0)),
                                 ),
-                                child: Column(children: [
+                               child: Padding(padding: EdgeInsets.all(10.0), child: 
+                                Column(children: [
                                   Row(children: [
-                                    Text(snapshot.data![index].content!),
+                                  
+                                    Text(snapshot.data![index].content!, 
+                                    style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1),
                                     Expanded(flex: 1, child: SizedBox()),
                                     ElevatedButton(
                                         onPressed: () {
@@ -97,9 +102,7 @@ class _HomePageStateful extends State<HomePageStateful> {
                                         child: const Icon(Icons.delete))
                                   ]),
                                   SizedBox(height: 10.0),
-                                  Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Container(
+                                   Container(
                                           width: double.infinity,
                                           child: ElevatedButton(
                                               onPressed: () {
@@ -128,8 +131,14 @@ class _HomePageStateful extends State<HomePageStateful> {
                                               child: Text("Update",
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .bodyText1)))),
-                                ])),
+                                                      .bodyText1))),
+                                                      Row(children: [
+                                              Text("Created: ${snapshot.data![index].creationDate.toLocal().toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black45),
+                                              ),
+                                              Expanded(flex: 1, child: SizedBox()),
+                                              Text("Updated: ${snapshot.data![index].lastUpdating.toLocal().toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black45),
+                                              ),
+                       ]) ]))),
                           ),
                         );
                       } else {
