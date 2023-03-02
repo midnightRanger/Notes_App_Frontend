@@ -101,6 +101,15 @@ class Dio_Client {
     }
   }
 
+  Future<String?>? createNote(
+    {required String token, 
+    required String name, 
+    required String content}
+  ) 
+  {
+    return null; 
+  }
+
     Future<String?> updateNote(
       {required String token,
       required int id,

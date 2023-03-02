@@ -1,6 +1,7 @@
 import 'package:dart_interface/dio.dart';
 import 'package:dart_interface/domain/models/post.dart';
 import 'package:dart_interface/globals/settings/utils/router_utils.dart';
+import 'package:dart_interface/pages/note_add_page.dart';
 import 'package:dart_interface/pages/note_edit_page.dart';
 import 'package:dart_interface/pages/profile_page_edit.dart';
 import 'package:dio/dio.dart';
@@ -173,7 +174,7 @@ class _HomePageStateful extends State<HomePageStateful> {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (BuildContext context) {
-                                          return ProfilePageEdit(
+                                          return NoteAddPage(
                                               token: widget.token!);
                                         },
                                       ));

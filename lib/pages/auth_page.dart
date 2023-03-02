@@ -160,10 +160,11 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(10),
       child: Form(
         key: _formKey,
-        child: Column(
+        child: 
+        Column(
           children: [
             // Email
             DynamicInputWidget(
@@ -294,8 +295,8 @@ class _AuthFormWidgetState extends State<AuthFormWidget> {
             ),
             Text(authMessage ?? " ")
           ],
-        ),
-      ),
-    );
+        )),
+      );
+    
   }
 }
