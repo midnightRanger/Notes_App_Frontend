@@ -45,13 +45,21 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
   final NoteValidators noteValidator = NoteValidators();
 
   
+  List<int>? _categoriesId;
+  List<String>? _categoriesName; 
+
+  List<Category>? categories; 
+
   List<String> _countrycodes = ["+65", "+91"];
   List<String> _colors = ['', 'red', 'green', 'blue', 'orange'];
 
-  String? _selectedCountryCode;
+  String? _selectedCategory;
+  int? _selectedCategoryId; 
   String _color = '';
 
   Future<AlertDialog?> addNote(BuildContext context) async {
+
+    
     String? message = await _dio.createNote(
         content: contentController.text,
         name: nameController.text,
@@ -78,6 +86,14 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
     );
   }
 
+  fillingDropdown(List<Category> categories) {
+    for(var i = 0; i < categories.length; i++) {
+      _categoriesId?.add(categories[i].id!);  
+      _categoriesName?.add(categories[i].categoryName!); 
+    }
+
+  }
+
   @override
   void initState() {
     super.initState();
@@ -86,6 +102,7 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
 
     nameFocusNode = FocusNode();
     contentFocusNode = FocusNode();
+    
   }
 
   @override
@@ -104,7 +121,14 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
     return Center(
       child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(children: [
+          child: FutureBuilder<List<Category>?>(
+              future: _dio.getCategories(token: widget.token!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  categories = snapshot.data;
+                  if (categories != null) {
+                    fillingDropdown(categories!); 
+          return Column(children: [
             Row(
               children: [
                 Container(
@@ -165,15 +189,16 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
                   EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10),
             ),
            DropdownButton(
-              hint: Text(_selectedCountryCode ?? "Category"),
-              value: _selectedCountryCode,
-              items: _countrycodes
-                  .map((code) =>
-                      new DropdownMenuItem(value: code, child: new Text(code)))
+              hint: Text(_selectedCategory ?? "Category"),
+              value: _selectedCategoryId,
+              items: categories!
+                  .map((category) =>
+                      new DropdownMenuItem(value: category.id, child: new Text(category.categoryName!)))
                   .toList(),
               onChanged: (val) {
                 setState(() {
-                  _selectedCountryCode = val;
+                  _selectedCategory = categories!.singleWhere((element) => element.id == val).categoryName; 
+                  _selectedCategoryId = val;                 
                 });
               },
             ),
@@ -196,7 +221,12 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
                           child: Text("Update Note",
                               style: Theme.of(context).textTheme.bodyText1)),
                     )))
-          ])),
-    );
+          ]);
+          }
+          }
+          return CircularProgressIndicator();
+          }),
+
+    ));
   }
 }

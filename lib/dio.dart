@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dart_interface/domain/models/category.dart';
 import 'package:dart_interface/interceptor/AuthInterceptor.dart';
 import 'package:dio/dio.dart';
 
@@ -43,6 +44,35 @@ class Dio_Client {
     }
 
     return encodedUser;
+  }
+
+  Future<List<Category>?> getCategories({required String token}) async {
+
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}'; 
+
+      Response rawResponse = await _dio.get(_baseUrl + 'category');
+
+      print('Raw Categories: ${rawResponse.data}');
+
+      List<Category> myCategories = (rawResponse.data as List).map((e) {
+        return Category.fromJson(e);
+      }).toList();
+
+      return myCategories; 
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+
   }
 
   Future<List<Post>?> getNotes({required String token}) async {
