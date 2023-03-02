@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:dart_interface/domain/models/category.dart';
 import 'package:dart_interface/pages/client_validators/note_validator.dart';
+import 'package:dart_interface/pages/home_page.dart';
+import 'package:dart_interface/pages/widgets/buttom_navbar_widget.dart';
 import 'package:dart_interface/pages/widgets/dynamic_auth_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -63,7 +65,7 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
     String? message = await _dio.createNote(
         content: contentController.text,
         name: nameController.text,
-        token: widget.token!);
+        token: widget.token!, categoryId: _selectedCategoryId!);
     print(message);
 
     AlertDialog alert = AlertDialog(
@@ -73,6 +75,8 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
         TextButton(
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context).pop();
+
           },
           child: const Text('OK'),
         ),
@@ -117,8 +121,8 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
+  Widget build(BuildContext context) {    
+     return Center(
       child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: FutureBuilder<List<Category>?>(

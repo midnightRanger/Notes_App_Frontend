@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dart_interface/dio.dart';
 import 'package:dart_interface/domain/models/post.dart';
 import 'package:dart_interface/globals/settings/utils/router_utils.dart';
@@ -42,6 +44,12 @@ class _HomePageStateful extends State<HomePageStateful> {
   @override
   void initState() {
     super.initState();
+  }
+
+   
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 
   @override
@@ -177,7 +185,7 @@ class _HomePageStateful extends State<HomePageStateful> {
                                           return NoteAddPage(
                                               token: widget.token!);
                                         },
-                                      ));
+                                      )).then(onGoBack);
                                       // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
                                     },
                                     style: ElevatedButton.styleFrom(

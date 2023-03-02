@@ -47,9 +47,8 @@ class Dio_Client {
   }
 
   Future<List<Category>?> getCategories({required String token}) async {
-
     try {
-      _dio.options.headers['Authorization'] = 'Bearer ${token}'; 
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
 
       Response rawResponse = await _dio.get(_baseUrl + 'category');
 
@@ -59,7 +58,7 @@ class Dio_Client {
         return Category.fromJson(e);
       }).toList();
 
-      return myCategories; 
+      return myCategories;
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
@@ -72,7 +71,6 @@ class Dio_Client {
         print(e.message);
       }
     }
-
   }
 
   Future<List<Post>?> getNotes({required String token}) async {
@@ -88,7 +86,7 @@ class Dio_Client {
         return Post.fromJson(e);
       }).toList();
 
-     return myPosts; 
+      return myPosts;
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
@@ -131,22 +129,49 @@ class Dio_Client {
     }
   }
 
-  Future<String?>? createNote(
-    {required String token, 
-    required String name, 
-    required String content}
-  ) 
-  {
-    return null; 
+  Future<String>? createNote(
+      {required String token,
+      required String name,
+      required String content,
+      required int categoryId}) async {
+    ModelResponse modelResponse;
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
+
+      Response createNoteResponse = await _dio.post(_baseUrl + 'post',
+          data: {
+            'name': name,
+            'content': content,
+            'category': {'id': categoryId}
+          },
+          options: Options(receiveDataWhenStatusError: true));
+
+      modelResponse = ModelResponse.fromJson(createNoteResponse.data);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+
+        return "Information: ${ModelResponse.fromJson(e.response!.data).message}";
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+        return "Information: ${e.message}";
+      }
+    }
+
+    return "Information: ${modelResponse.message}";
   }
 
-    Future<String?> updateNote(
+  Future<String?> updateNote(
       {required String token,
       required int id,
       required String content,
       required String name}) async {
-
-        ModelResponse modelResponse;
+    ModelResponse modelResponse;
     try {
       _dio.options.headers['Authorization'] = 'Bearer ${token}';
 
@@ -155,7 +180,6 @@ class Dio_Client {
           options: Options(receiveDataWhenStatusError: true));
 
       modelResponse = ModelResponse.fromJson(updateNoteResponse.data);
-      
     } on DioError catch (e) {
       if (e.response != null) {
         print('Dio error!');
