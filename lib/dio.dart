@@ -46,6 +46,36 @@ class Dio_Client {
     return encodedUser;
   }
 
+    Future<String?> deleteNote({required String token, required int id}) async {
+    
+    ModelResponse? modelResponse; 
+    try {
+      _dio.options.headers['Authorization'] = 'Bearer ${token}';
+
+      Response rawResponse = await _dio.delete(_baseUrl + 'post/${id}');
+
+      modelResponse = ModelResponse.fromJson(rawResponse.data);
+
+      return modelResponse.message!; 
+      
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');;
+
+        return modelResponse?.error!; 
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+        return e.message; 
+      }
+    }
+
+  }
+
   Future<List<Category>?> getCategories({required String token}) async {
     try {
       _dio.options.headers['Authorization'] = 'Bearer ${token}';

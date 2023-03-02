@@ -222,7 +222,7 @@ class _NoteAddPageStateful extends State<NoteAddPageStateful> {
                             ),
                             minimumSize: Size(42, 42),
                           ),
-                          child: Text("Update Note",
+                          child: Text("Create Note",
                               style: Theme.of(context).textTheme.bodyText1)),
                     )))
           ]);

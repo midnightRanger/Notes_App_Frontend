@@ -11,7 +11,7 @@ import 'globals/provider/app_state_provider.dart';
 import 'globals/settings/app_router.dart';
 
 Future<void> main() async {
-//  concrete binding for applications based on the Widgets framewor
+//  concrete binding for applications based on the Widgets framework
   WidgetsFlutterBinding.ensureInitialized();
 // Instantiate shared pref
   SharedPreferences prefs = await SharedPreferences.getInstance();

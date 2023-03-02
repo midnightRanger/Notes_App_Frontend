@@ -1,6 +1,7 @@
 import 'package:dart_interface/pages/home_page.dart';
 import 'package:dart_interface/pages/profile_page.dart';
 import 'package:dart_interface/pages/screens/auth_screen.dart';
+import 'package:dart_interface/pages/widgets/custom_search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

@@ -6,6 +6,7 @@ import 'package:dart_interface/globals/settings/utils/router_utils.dart';
 import 'package:dart_interface/pages/note_add_page.dart';
 import 'package:dart_interface/pages/note_edit_page.dart';
 import 'package:dart_interface/pages/profile_page_edit.dart';
+import 'package:dart_interface/pages/widgets/custom_search_delegate.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,9 @@ class HomePageStateful extends StatefulWidget {
 
 class _HomePageStateful extends State<HomePageStateful> {
   String token;
+  List<Post>? _allNotes; 
+
+  final Dio_Client _dio = Dio_Client();
 
   _HomePageStateful({required this.token});
 
@@ -52,13 +56,50 @@ class _HomePageStateful extends State<HomePageStateful> {
     setState(() {});
   }
 
+  Future<AlertDialog?> deleteNote(BuildContext context, {required int id}) async {
+
+    String? message = await _dio.deleteNote(
+        id: id,
+        token: widget.token!);
+    print(message);
+
+    AlertDialog alert = AlertDialog(
+      title: const Text('Deleting Note: '),
+      content: Text(message!),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            setState(() {
+              
+            });
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Scaffold(
+      appBar: AppBar(actions: [
+        IconButton(onPressed: (){
+          showSearch(context: context, delegate: CustomSearchDelegate(allPosts: _allNotes, token: widget.token!));
+        },icon: const Icon(Icons.search))
+      ]),
+      body: Center(
         child: FutureBuilder<List<Post>?>(
             future: _client.getNotes(token: widget.token!),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                _allNotes = snapshot.data; 
                 return ListView.builder(
                     itemCount: snapshot.data!.length + 1,
                     itemBuilder: (context, index) {
@@ -98,14 +139,7 @@ class _HomePageStateful extends State<HomePageStateful> {
                                         // Flexible(flex: 1, fit: FlexFit.tight, child: SizedBox()),
                                         ElevatedButton(
                                             onPressed: () {
-                                              Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return ProfilePageEdit(
-                                                      token: widget.token!);
-                                                },
-                                              ));
+                                              deleteNote(id: snapshot.data![index].id!, context);
                                               // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
                                             },
                                             style: ElevatedButton.styleFrom(
@@ -168,8 +202,20 @@ class _HomePageStateful extends State<HomePageStateful> {
                                               fontSize: 12.0,
                                               color: Colors.black45),
                                         ),
-                                      ])
-                                    ]))),
+                                      ]),
+                                      SizedBox(height: 10),
+                                      Row(children: [
+                                      Text(
+                                          "Category: ${snapshot.data![index].category.categoryName}",
+                                          overflow: TextOverflow.fade,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.black45),
+                                        ),
+                                        Expanded(flex: 1, child: SizedBox()),]
+                          )]))),
+
                           ),
                         );
                       } else {
@@ -206,6 +252,6 @@ class _HomePageStateful extends State<HomePageStateful> {
               }
 
               return CircularProgressIndicator();
-            }));
+            })));
   }
 }
