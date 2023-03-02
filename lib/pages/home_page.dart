@@ -55,12 +55,17 @@ class _HomePageStateful extends State<HomePageStateful> {
                     itemBuilder: (context, index) {
                       if (index < snapshot.data!.length!) {
                         return ListTile(
-                          title: Text(
-                            snapshot.data![index].name!,
-                            textAlign: TextAlign.center,
-                          ),
+                          title: 
+                          Row(children: [
+                            Expanded(flex:1, child: 
+                            Text(
+                              snapshot.data![index].name!,
+                              textAlign: TextAlign.center,
+                            )), 
+                            Icon(Icons.notes_outlined)
+                          ]),
                           subtitle: ConstrainedBox(
-                            constraints: new BoxConstraints(minHeight: 50.0),
+                            constraints: new BoxConstraints(minHeight: 100.0),
                             child: Container(
                                 decoration: BoxDecoration(
                                   color: Color.fromRGBO(116, 154, 155, 1),
@@ -70,49 +75,55 @@ class _HomePageStateful extends State<HomePageStateful> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.0)),
                                 ),
-                               child: Padding(padding: EdgeInsets.all(10.0), child: 
-                                Column(children: [
-                                  Row(children: [
-                                  
-                                    Text(snapshot.data![index].content!, 
-                                    style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1),
-                                    Expanded(flex: 1, child: SizedBox()),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                              return ProfilePageEdit(
-                                                  token: widget.token!);
+                                child: Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Column(children: [
+                                      Row(children: [
+                                        Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                                snapshot.data![index].content!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1)),
+                                        // Flexible(flex: 1, fit: FlexFit.tight, child: SizedBox()),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return ProfilePageEdit(
+                                                      token: widget.token!);
+                                                },
+                                              ));
+                                              // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
                                             },
-                                          ));
-                                          // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromRGBO(10, 86, 88, 1),
-                                          shape: new RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(10.0),
-                                          ),
-                                          minimumSize: Size(30, 30),
-                                        ),
-                                        child: const Icon(Icons.delete))
-                                  ]),
-                                  SizedBox(height: 10.0),
-                                   Container(
+                                            style: ElevatedButton.styleFrom(
+                                              primary:
+                                                  Color.fromRGBO(10, 86, 88, 1),
+                                              shape: new RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        10.0),
+                                              ),
+                                              minimumSize: Size(30, 30),
+                                            ),
+                                            child: const Icon(Icons.delete))
+                                      ]),
+                                      SizedBox(height: 10.0),
+                                      Container(
                                           width: double.infinity,
                                           child: ElevatedButton(
                                               onPressed: () {
-
                                                 Navigator.of(context)
                                                     .push(MaterialPageRoute(
                                                   builder:
                                                       (BuildContext context) {
                                                     return NoteEditPage(
-                                                        token: widget.token!, id: snapshot.data![index].id!);
+                                                        token: widget.token!,
+                                                        id: snapshot
+                                                            .data![index].id!);
                                                   },
                                                 ));
                                                 // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
@@ -132,42 +143,55 @@ class _HomePageStateful extends State<HomePageStateful> {
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyText1))),
-                                                      Row(children: [
-                                              Text("Created: ${snapshot.data![index].creationDate.toLocal().toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black45),
-                                              ),
-                                              Expanded(flex: 1, child: SizedBox()),
-                                              Text("Updated: ${snapshot.data![index].lastUpdating.toLocal().toString()}", style: TextStyle(fontSize: 12.0, color: Colors.black45),
-                                              ),
-                       ]) ]))),
+                                      Row(children: [
+                                        Text(
+                                          "Created: ${snapshot.data![index].creationDate.toLocal().toString().substring(0, 19)}",
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.black45),
+                                          overflow: TextOverflow.fade,
+                                        ),
+                                        Expanded(flex: 1, child: SizedBox()),
+                                        Text(
+                                          "Updated: ${snapshot.data![index].lastUpdating.toLocal().toString().substring(0, 19)}",
+                                          overflow: TextOverflow.fade,
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.black45),
+                                        ),
+                                      ])
+                                    ]))),
                           ),
                         );
                       } else {
-                        return Padding(padding: EdgeInsets.only(left: 15.0, right: 15.0), child:
-                        Container(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return ProfilePageEdit(
-                                          token: widget.token!);
+                        return Padding(
+                            padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                            child: Container(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return ProfilePageEdit(
+                                              token: widget.token!);
+                                        },
+                                      ));
+                                      // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
                                     },
-                                  ));
-                                  // GoRouter.of(context).goNamed(APP_PAGE.profile_edit.routeName, queryParams: {'token': widget.token!});
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.fromRGBO(10, 86, 88, 1),
-                                  shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(10.0),
-                                  ),
-                                  minimumSize: Size(42, 42),
-                                ),
-                                child: Text("Create new",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(color: Colors.white)))));
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(10, 86, 88, 1),
+                                      shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0),
+                                      ),
+                                      minimumSize: Size(42, 42),
+                                    ),
+                                    child: Text("Create new",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(color: Colors.white)))));
                       }
                     });
               }

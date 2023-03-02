@@ -11,6 +11,8 @@ class DynamicInputWidget extends StatelessWidget {
       required this.labelText,
       required this.textInputAction,
       required this.isNonPasswordField,
+      this.maxLines,
+      this.minLines,
       Key? key})
       : super(key: key);
 
@@ -32,6 +34,8 @@ class DynamicInputWidget extends StatelessWidget {
   final String labelText;
   // The keyword action to display
   final TextInputAction textInputAction;
+  final int? maxLines;
+  final int? minLines; 
 
 
 
@@ -62,6 +66,8 @@ class DynamicInputWidget extends StatelessWidget {
       textInputAction: textInputAction,
       obscureText: obscureText,
       validator: validator,
+        maxLines: maxLines ?? 1,
+   minLines: minLines ?? 1,
       // onSaved: passwordVlidator,
     );
   }

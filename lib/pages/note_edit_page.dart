@@ -149,6 +149,7 @@ class _NoteEditPageStateful extends State<NoteEditPageStateful> {
                             height: 1),
                       ),
 
+                    
                       DynamicInputWidget(
                         controller: nameController,
                         obscureText: false,
@@ -165,7 +166,7 @@ class _NoteEditPageStateful extends State<NoteEditPageStateful> {
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, right: 10, left: 10),
                       ),
-
+                    SizedBox(height: 100, child: 
                       DynamicInputWidget(
                         controller: contentController,
                         obscureText: false,
@@ -176,6 +177,9 @@ class _NoteEditPageStateful extends State<NoteEditPageStateful> {
                         labelText: "Enter content",
                         textInputAction: TextInputAction.next,
                         isNonPasswordField: true,
+                        maxLines: 5,
+                        minLines: 2
+                      ),
                       ),
 
                       const Padding(
